@@ -12,7 +12,7 @@ import java.util.Optional;
 public class LoginController {
 
     public String getLoginPage(@RequestParam Optional<String> error) {
-
+        return new ModelAndView("login", "error", error);
     }
 
 }
