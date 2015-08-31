@@ -1,5 +1,11 @@
 package cn.boxfish.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 /**
  * Created by TIM on 2015/8/30.
  * 所有异常处理
@@ -7,9 +13,9 @@ package cn.boxfish.controller;
 @ControllerAdvice
 public class ExceptionHandlerControllerAdvice {
 
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.ERROR)
-    public String allException(Exception e) {
+    @ExceptionHandler(UsernameNotFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public String allException(UsernameNotFoundException e) {
         return e.getMessage();
     }
 }

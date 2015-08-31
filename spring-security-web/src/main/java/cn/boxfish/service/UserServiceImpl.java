@@ -2,6 +2,8 @@ package cn.boxfish.service;
 
 import cn.boxfish.entity.User;
 import cn.boxfish.entity.UserCreateForm;
+import cn.boxfish.entity.jpa.UserJpaRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -12,13 +14,16 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
+    @Autowired
+    private UserJpaRepository repository;
+
     @Override
-    public Optional<User> getUserByUsername(String username) {
-        return null;
+    public User findByUsername(String username) {
+        return repository.findByUsername(username);
     }
 
     @Override
-    public Optional<User> getUserById(Long id) {
+    public User getUserById(Long id) {
         return null;
     }
 

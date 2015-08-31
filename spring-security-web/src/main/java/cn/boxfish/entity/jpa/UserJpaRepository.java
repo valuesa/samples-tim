@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface UserJpaRepository extends JpaRepository<User, Long> {
 
     // Optional JAVA8新特性，允许list为空不会报出空指针异常
-    Optional<User> findOneByUsername(String username);
+    User findByUsername(String username);
 
 }

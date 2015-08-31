@@ -2,6 +2,10 @@ package cn.boxfish.entity.validate;
 
 import cn.boxfish.entity.UserCreateForm;
 import cn.boxfish.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
 /**
  * Created by TIM on 2015/8/30.
@@ -26,7 +30,7 @@ public class UserCreateFormValidator implements Validator {
     public void validate(Object target, Errors errors) {
         UserCreateForm form = (UserCreateForm) target;
         validatePasswords(errors, form);
-        validateEmail(errors, form);
+        validateUsername(errors, form);
     }
 
     private void validatePasswords(Errors errors, UserCreateForm form) {
@@ -35,8 +39,8 @@ public class UserCreateFormValidator implements Validator {
         }
     }
 
-    private void validateEmail(Errors errors, UserCreateForm form) {
-        if (userService.getUserByEmail(form.getEmail()).isPresent()) {
+    private void validateUsername(Errors errors, UserCreateForm form) {
+        if (userService.findByUsername(form.getUsername()) != null) {
             errors.reject("email.exists", "User with this email already exists");
         }
     }
