@@ -35,10 +35,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // basic方式
-        http.authorizeRequests().anyRequest().fullyAuthenticated()
+        /*http.authorizeRequests().antMatchers("*//**").fullyAuthenticated()
                 .accessDecisionManager(accessDecisionManager())
-                .and().httpBasic();
-
+//                .antMatchers("").
+                .antMatchers("/static*//**").permitAll()
+                .and().httpBasic();*/
         //httpBasic() basic认证
 
         // 表单认证,访问控制
@@ -63,11 +64,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMe();*/
 
         // 自定义
-        /*http.authorizeRequests()
+        http.authorizeRequests()
+                .antMatchers("/login","/static/**").permitAll()
+                .antMatchers("/**").fullyAuthenticated()
                 .accessDecisionManager(accessDecisionManager())
-                .antMatchers("/", "/static*//**").permitAll()
-                .antMatchers("/users*//**").hasAuthority("ADMIN")
-                .anyRequest().fullyAuthenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
@@ -81,7 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/")
                 .permitAll()
                 .and()
-                .rememberMe();*/
+                .rememberMe();
     }
 
     @Autowired

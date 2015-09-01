@@ -3,9 +3,7 @@ package cn.boxfish.entity;
 import com.google.common.collect.Lists;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by LuoLiBing on 15/8/29.
@@ -30,6 +28,9 @@ public class User {
 
     @Transient
     private List<Authority> authorities;
+
+    @Transient
+    private Map<String, Authority> authorityMap;
 
     public Long getId() {
         return id;
@@ -74,22 +75,27 @@ public class User {
         return roleNames;
     }
 
-    public List<Authority> getAuthorities() {
+    public boolean accessCheck(String url) {
+        return authorityMap.get(url) != null;
+    }
 
-        if(authorities == null) {
-            synchronized (this) {
-                if(authorities == null) {
-                    Set<Authority> results = new HashSet<>();
-                    for(int i=0; roles != null; i++) {
-                        Role role = roles.get(i);
-                        if(role.getAuthorties() != null) {
-                            results.addAll(role.getAuthorties());
-                        }
-                    }
-                    authorities = Lists.newArrayList(results);
-                }
+    public List<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void initAuthority() {
+        Set<Authority> results = new HashSet<>();
+        for(int i=0; roles != null && i<roles.size(); i++) {
+            Role role = roles.get(i);
+            if(role.getAuthorties() != null) {
+                results.addAll(role.getAuthorties());
             }
         }
-        return authorities;
+        authorities = Lists.newArrayList(results);
+
+        authorityMap = new HashMap<>();
+        for(Authority authority: authorities) {
+            authorityMap.put(authority.getUrl(), authority);
+        }
     }
 }

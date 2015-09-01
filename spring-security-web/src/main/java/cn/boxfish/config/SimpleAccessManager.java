@@ -6,8 +6,10 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.web.FilterInvocation;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * Created by LuoLiBing on 15/8/31.
@@ -31,18 +33,49 @@ public class SimpleAccessManager implements AccessDecisionManager {
         System.out.println(authentication);
         System.out.println(configAttributes);
 
-        if(!(authentication.getPrincipal() instanceof CurrentUser)) {
-            throw new AccessDeniedException(" 没有权限访问！ ");
-        }
-
         System.out.println(" ---------------  MyAccessDecisionManager --------------- ");
         if(configAttributes == null) {
             return;
         }
-        // 权限判断
 
-        // 没有权限
+        // 登录用户权限认证
+        if(authentication.getPrincipal() instanceof CurrentUser) {
+
+            FilterInvocation filter = (FilterInvocation) object;
+            String uri = filter.getRequest().getRequestURI();
+            //Authority authority = AuthorityContext.getAuthority(uri);
+            CurrentUser currentUser = (CurrentUser) authentication.getPrincipal();
+            if (currentUser.getUser().accessCheck(uri) || checkPermitAll(configAttributes)) {
+                return;
+            }
+
+        } else {
+            // 匿名用户
+            if(checkPermitAll(configAttributes)) {
+                return;
+            }
+        }
+        //没有权限
         throw new AccessDeniedException(" 没有权限访问！ ");
+    }
+
+    private boolean checkPermitAll(Collection<ConfigAttribute> configAttributes) {
+        if(configAttributes == null) {
+            return true;
+        }
+        Iterator<ConfigAttribute> iterator = configAttributes.iterator();
+        while (iterator.hasNext()) {
+            ConfigAttribute configAttribute = iterator.next();
+            //访问所请求资源所需要的权限
+            String needPermission = configAttribute.toString();
+            //System.out.println("needPermission is " + needPermission);
+            //用户所拥有的权限authentication
+            if ("permitAll".equals(needPermission)) {
+                return true;
+            }
+        }
+        return false;
+
     }
 
     @Override

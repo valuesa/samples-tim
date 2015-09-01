@@ -26,6 +26,7 @@ public class BaseUserDetailService implements UserDetailsService {
         if(user == null) {
             throw new UsernameNotFoundException(String.format("用户名为%s没有找到", username));
         }
+        user.initAuthority();
         return new CurrentUser(user);
     }
 }
