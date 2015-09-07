@@ -11,6 +11,7 @@
     <modules>
         <module>spring-security</module>
         <module>spring-security-web</module>
+        <module>test-samples</module>
     </modules>
 
     <properties>

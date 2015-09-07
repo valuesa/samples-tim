@@ -17,6 +17,7 @@ import java.util.Iterator;
  */
 public class SimpleAccessManager implements AccessDecisionManager {
 
+
     /**
      * authentication包含了当前用户信息
      * 当前正在请求的受保护对象
@@ -29,7 +30,8 @@ public class SimpleAccessManager implements AccessDecisionManager {
      * @throws InsufficientAuthenticationException
      */
     @Override
-    public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes) throws AccessDeniedException, InsufficientAuthenticationException {
+    public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
+            throws AccessDeniedException, InsufficientAuthenticationException {
         System.out.println(authentication);
         System.out.println(configAttributes);
 
@@ -50,14 +52,41 @@ public class SimpleAccessManager implements AccessDecisionManager {
             }
 
         } else {
-            // 匿名用户
+            // 匿名用户，所访问的资源是否可以匿名
             if(checkPermitAll(configAttributes)) {
                 return;
             }
         }
+
+
+        /**
+         * if( configAttributes == null ) {
+            return ;
+         }
+
+         Iterator<ConfigAttribute> ite = configAttributes.iterator();
+
+         while( ite.hasNext()){
+
+             ConfigAttribute ca = ite.next();
+             String needRole = ((SecurityConfig)ca).getAttribute();
+
+             //ga 为用户所被赋予的权限。 needRole 为访问相应的资源应该具有的权限。
+             for( GrantedAuthority ga: authentication.getAuthorities()){
+
+                 if(needRole.trim().equals(ga.getAuthority().trim())){
+
+                 return;
+                 }
+
+             }
+
+         }
+         */
         //没有权限
         throw new AccessDeniedException(" 没有权限访问！ ");
     }
+
 
     private boolean checkPermitAll(Collection<ConfigAttribute> configAttributes) {
         if(configAttributes == null) {
