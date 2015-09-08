@@ -1,8 +1,12 @@
 package cn.boxfish.entity;
 
+import com.google.common.collect.Lists;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 
+import java.util.Collection;
 import java.util.List;
 
 
@@ -15,7 +19,7 @@ public class CurrentUser extends User {
 
     public CurrentUser(cn.boxfish.entity.User user) {
         super(user.getUsername(), user.getPassword(),
-                AuthorityUtils.createAuthorityList(user.getRoleNames()));
+                AuthorityUtils.createAuthorityList(user.getAllAuthorities().toArray(new String[]{})));
         this.user = user;
     }
 
@@ -27,14 +31,12 @@ public class CurrentUser extends User {
         this.user = user;
     }
 
-    public List<Role> getRoles() {
-        return user.getRoles();
-    }
-
     @Override
     public String toString() {
         return "currentUser{" +
                 "user=" + user +
                 "} " + super.toString();
     }
+
+
 }

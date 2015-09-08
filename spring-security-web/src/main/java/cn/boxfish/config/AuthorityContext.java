@@ -13,7 +13,7 @@ import java.util.Map;
 /**
  * Created by LuoLiBing on 15/9/1.
  */
-@Component
+/*@Component
 public class AuthorityContext implements InitializingBean {
 
     @Autowired
@@ -39,4 +39,4 @@ public class AuthorityContext implements InitializingBean {
         return context.get(uri);
     }
 
-}
+}*/

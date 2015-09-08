@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
  * Created by LuoLiBing on 15/8/29.
  */
 @SpringBootApplication
-@Controller
 public class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

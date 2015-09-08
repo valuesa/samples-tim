@@ -15,10 +15,11 @@ import java.util.Iterator;
  * Created by LuoLiBing on 15/8/31.
  * 自定义的访问权限控制manager
  */
+/*
 public class SimpleAccessManager implements AccessDecisionManager {
 
 
-    /**
+    *//**
      * authentication包含了当前用户信息
      * 当前正在请求的受保护对象
      * 当前正在访问的受保护对象的配置信息
@@ -28,7 +29,7 @@ public class SimpleAccessManager implements AccessDecisionManager {
      * @param configAttributes
      * @throws AccessDeniedException
      * @throws InsufficientAuthenticationException
-     */
+     *//*
     @Override
     public void decide(Authentication authentication, Object object, Collection<ConfigAttribute> configAttributes)
             throws AccessDeniedException, InsufficientAuthenticationException {
@@ -59,7 +60,7 @@ public class SimpleAccessManager implements AccessDecisionManager {
         }
 
 
-        /**
+        *//**
          * if( configAttributes == null ) {
             return ;
          }
@@ -82,7 +83,7 @@ public class SimpleAccessManager implements AccessDecisionManager {
              }
 
          }
-         */
+         *//*
         //没有权限
         throw new AccessDeniedException(" 没有权限访问！ ");
     }
@@ -116,4 +117,4 @@ public class SimpleAccessManager implements AccessDecisionManager {
     public boolean supports(Class<?> clazz) {
         return true;
     }
-}
+}*/

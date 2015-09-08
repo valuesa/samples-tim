@@ -1,5 +1,7 @@
 package cn.boxfish.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
@@ -21,19 +23,21 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+    private final static Logger log = LoggerFactory.getLogger(SecurityConfig.class);
 
     /**
      * 这个方法为override GlobalMethodSecurityConfiguration的方法
      * @return
      */
-    @Bean
+    /*@Bean
     public AccessDecisionManager accessDecisionManager() {
         return new SimpleAccessManager();
-    }
+    }*/
 
     // 设置认证方式，所有用户都需要被认证
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+
         // basic方式
         /*http.authorizeRequests().antMatchers("*//**").fullyAuthenticated()
                 .accessDecisionManager(accessDecisionManager())
@@ -65,9 +69,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         // 自定义
         http.authorizeRequests()
-                .antMatchers("/login","/static/**").permitAll()
-                .antMatchers("/**").fullyAuthenticated()
-                .accessDecisionManager(accessDecisionManager())
+                .antMatchers("/","/static/**").permitAll()
+                .anyRequest().fullyAuthenticated()
+                //.accessDecisionManager(accessDecisionManager())
                 .and()
                 .formLogin()
                 .loginPage("/login")

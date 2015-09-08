@@ -26,7 +26,18 @@ public class BaseUserDetailService implements UserDetailsService {
         if(user == null) {
             throw new UsernameNotFoundException(String.format("用户名为%s没有找到", username));
         }
-        user.initAuthority();
         return new CurrentUser(user);
+    }
+
+
+    /**
+     * 控制用户只能访问自身或者拥有管理员权限可以访问所有用户
+     * @param currentUser
+     * @param userId
+     * @return
+     */
+    public boolean canAccessUser(CurrentUser currentUser, Long userId) {
+        return (currentUser != null)
+                && (currentUser.getUser().getAllAuthorities().contains("ROLE_ADMIN") || currentUser.getUser().getId().equals(userId));
     }
 }

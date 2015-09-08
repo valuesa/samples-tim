@@ -30,7 +30,7 @@ public class User {
     private List<Authority> authorities;
 
     @Transient
-    private Map<String, Authority> authorityMap;
+    private List<String> allAuthorities;
 
     public Long getId() {
         return id;
@@ -75,15 +75,36 @@ public class User {
         return roleNames;
     }
 
-    public boolean accessCheck(String url) {
-        return authorityMap.get(url) != null;
-    }
-
     public List<Authority> getAuthorities() {
         return authorities;
     }
 
-    public void initAuthority() {
+
+    public List<String> getAllAuthorities() {
+
+        if(allAuthorities == null) {
+            List<String> _allAuthorities = Lists.newArrayList();
+            // 角色权限
+            if (roles != null) {
+                for (Role role : roles) {
+                    _allAuthorities.add("ROLE_" + role.getName());
+                }
+            }
+
+            // 获取角色所拥有的权限去重
+            initRoleAuthority();
+            // 操作权限
+            if (authorities != null) {
+                for (Authority authority : authorities) {
+                    _allAuthorities.add("AUTH_" + authority.getUrl());
+                }
+            }
+            this.allAuthorities = _allAuthorities;
+        }
+        return allAuthorities;
+    }
+
+    public void initRoleAuthority() {
         Set<Authority> results = new HashSet<>();
         for(int i=0; roles != null && i<roles.size(); i++) {
             Role role = roles.get(i);
@@ -93,9 +114,5 @@ public class User {
         }
         authorities = Lists.newArrayList(results);
 
-        authorityMap = new HashMap<>();
-        for(Authority authority: authorities) {
-            authorityMap.put(authority.getUrl(), authority);
-        }
     }
 }
