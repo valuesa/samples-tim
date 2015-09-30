@@ -53,7 +53,7 @@ public class UserController {
     }
 
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_TEST')")
     @RequestMapping(value = "/user/create", method = RequestMethod.GET)
     public String getCreateUserPage() {
         return "create";
