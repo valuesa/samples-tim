@@ -37,4 +37,9 @@ public class Test2 {
             System.out.println(matcher.group());
     }
 
+    @Test
+    public void testTempPath() {
+        System.out.println(System.getProperty("java.io.tmpdir"));
+    }
+
 }

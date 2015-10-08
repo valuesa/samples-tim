@@ -11,6 +11,7 @@ import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -39,11 +40,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         // basic方式
-        /*http.authorizeRequests().antMatchers("*//**").fullyAuthenticated()
-                .accessDecisionManager(accessDecisionManager())
+        http.authorizeRequests().antMatchers("*").fullyAuthenticated()
+                //.accessDecisionManager(accessDecisionManager())
 //                .antMatchers("").
-                .antMatchers("/static*//**").permitAll()
-                .and().httpBasic();*/
+                .antMatchers("/static*").permitAll()
+                .and().httpBasic();
         //httpBasic() basic认证
 
         // 表单认证,访问控制
@@ -68,8 +69,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMe();*/
 
         // 自定义
-        http.authorizeRequests()
-                .antMatchers("/","/static/**").permitAll()
+        /*http.authorizeRequests()
+                .antMatchers("/","/static*//**").permitAll()
                 .anyRequest().fullyAuthenticated()
                 //.accessDecisionManager(accessDecisionManager())
                 .and()
@@ -85,7 +86,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/")
                 .permitAll()
                 .and()
-                .rememberMe();
+                .rememberMe();*/
     }
 
     @Autowired
@@ -95,9 +96,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         // inmemory
-        /*auth.inMemoryAuthentication()
+        auth.inMemoryAuthentication()
                 .withUser("user").password("password").roles("employee").and()
-                .withUser("admin").password("admin123").roles("employee", "admin");*/
+                .withUser("admin").password("admin123").roles("employee", "ADMIN");
 
         // JDBC方式
         /*
@@ -108,9 +109,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //.withUser("username").password("password").roles("USER");*/
 
         // 自行指定方式
-        auth
+        /*auth
                 .userDetailsService(userDetailsService);
-                //.passwordEncoder(new BCryptPasswordEncoder());
+                //.passwordEncoder(new BCryptPasswordEncoder());*/
     }
 
 
