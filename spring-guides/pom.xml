@@ -18,6 +18,9 @@
         <module>resttemplate</module>
         <module>cache</module>
         <module>jdbc</module>
+        <module>uploadFiles</module>
+        <module>ldap</module>
+        <module>form</module>
     </modules>
 
 
