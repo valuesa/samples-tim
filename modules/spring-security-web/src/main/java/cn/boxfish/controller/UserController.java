@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -110,6 +109,12 @@ public class UserController {
     public @ResponseBody Object pay() {
         System.out.println("pay");
         return ResponseEntity.ok("支付成功!");
+    }
+
+
+    @RequestMapping(value = "/error", method = RequestMethod.GET)
+    public @ResponseBody String error() {
+        return "error";
     }
 
 }

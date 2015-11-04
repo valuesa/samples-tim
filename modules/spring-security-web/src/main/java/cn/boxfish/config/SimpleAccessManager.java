@@ -1,16 +1,5 @@
 package cn.boxfish.config;
 
-import cn.boxfish.entity.CurrentUser;
-import org.springframework.security.access.AccessDecisionManager;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.ConfigAttribute;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.web.FilterInvocation;
-
-import java.util.Collection;
-import java.util.Iterator;
-
 /**
  * Created by LuoLiBing on 15/8/31.
  * 自定义的访问权限控制manager

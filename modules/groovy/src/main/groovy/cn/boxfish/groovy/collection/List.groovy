@@ -270,4 +270,10 @@ class List {
 
         assert Collections.nCopies(2, [1, 2]) == [[1, 2], [1, 2]]
     }
+
+    @Test
+    public void array() {
+        def arr = [1, 2, 3, 4]
+        println arr[0..2]
+    }
 }

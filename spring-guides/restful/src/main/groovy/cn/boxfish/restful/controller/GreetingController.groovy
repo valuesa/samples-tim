@@ -1,11 +1,15 @@
 package cn.boxfish.restful.controller
 
 import cn.boxfish.restful.entity.Greeting
+import groovy.util.logging.Slf4j
 import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestController
 
@@ -15,6 +19,7 @@ import java.util.concurrent.atomic.AtomicLong
  * Created by LuoLiBing on 15/9/29.
  */
 @RestController
+@Slf4j
 class GreetingController {
 
 
@@ -24,8 +29,19 @@ class GreetingController {
 
     @RequestMapping("/greeting")
     public Greeting greeting(@RequestParam(value = "name", defaultValue = "world") String name) {
+        int i = 1/0;
         return new Greeting(counter.incrementAndGet(),
                 String.format(template, name));
+    }
+
+
+    @RequestMapping(value = "/check/{email:.+}")
+    public Object check(@PathVariable String email) {
+        log.info email
+        if(email.contains("qq.com")){
+            return ["status": 'Y']
+        }
+        return ["status": 'N']
     }
 
 
@@ -53,8 +69,10 @@ class GreetingController {
      */
     @ExceptionHandler(value = Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public String exceptionHandle(Exception e) {
-        return e.getMessage()
+    public Object exceptionHandle(Exception e) {
+        Map resultMap = new HashMap()
+        resultMap.put("message", e.getMessage())
+        return resultMap
     }
 
     /**
@@ -64,34 +82,10 @@ class GreetingController {
      */
     @ExceptionHandler(value = RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public String runtimeExceptionHandle(Exception e) {
-        return e.getMessage()
+    public Object runtimeExceptionHandle(Exception e) {
+        Map resultMap = new HashMap()
+        resultMap.put("message", e.getMessage())
+        return resultMap
     }
-
-
-
-    /**
-     * Created by LuoLiBing on 15/9/23.
-     * 所有controller异常处理
-     */
-    /*@ControllerAdvice
-    public class ExceptionHandlerControllerAdvice {
-
-        *//**
-         * 捕获的异常，默认情况下都是ajax请求
-         * @param e
-         * @return
-         *//*
-        @ExceptionHandler(Exception.class)
-        @ResponseStatus(HttpStatus.OK)
-        public @ResponseBody Map<String, Object> allCatchException(Exception e) {
-            e.printStackTrace();
-            Map<String, Object> result = Maps.newHashMap();
-            result.put("success", "N");
-            result.put("message", e.getMessage());
-            return result;
-        }
-
-    }*/
 
 }

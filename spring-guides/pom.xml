@@ -21,6 +21,16 @@
         <module>uploadFiles</module>
         <module>ldap</module>
         <module>form</module>
+        <module>batch</module>
+        <module>transaction</module>
+        <module>async</module>
+        <module>submission</module>
+        <module>reactor</module>
+        <module>springboot</module>
+        <module>jquery</module>
+        <module>multirep</module>
+        <module>spring-import</module>
+        <module>spring-data-jpa</module>
     </modules>
 
 

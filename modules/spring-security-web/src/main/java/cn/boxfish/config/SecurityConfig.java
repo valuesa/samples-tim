@@ -4,14 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.access.AccessDecisionManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -40,11 +37,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         // basic方式
-        http.authorizeRequests().antMatchers("*").fullyAuthenticated()
+       /* http.authorizeRequests().antMatchers("*").fullyAuthenticated()
                 //.accessDecisionManager(accessDecisionManager())
 //                .antMatchers("").
                 .antMatchers("/static*").permitAll()
-                .and().httpBasic();
+                .and().httpBasic();*/
         //httpBasic() basic认证
 
         // 表单认证,访问控制
@@ -69,8 +66,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .rememberMe();*/
 
         // 自定义
-        /*http.authorizeRequests()
-                .antMatchers("/","/static*//**").permitAll()
+        http.authorizeRequests()
+                .antMatchers("/","/static*", "/error").permitAll()
                 .anyRequest().fullyAuthenticated()
                 //.accessDecisionManager(accessDecisionManager())
                 .and()
@@ -86,7 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessUrl("/")
                 .permitAll()
                 .and()
-                .rememberMe();*/
+                .rememberMe();
     }
 
     @Autowired

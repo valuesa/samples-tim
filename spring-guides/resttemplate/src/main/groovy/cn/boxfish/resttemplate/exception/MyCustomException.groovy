@@ -1,6 +1,6 @@
 package cn.boxfish.resttemplate.exception
 
-import org.apache.commons.io.IOUtils
+import org.json.JSONObject
 import org.springframework.http.client.ClientHttpResponse
 import org.springframework.web.client.DefaultResponseErrorHandler
 import org.springframework.web.client.ResponseErrorHandler
@@ -19,7 +19,15 @@ class MyCustomException implements ResponseErrorHandler {
 
     @Override
     void handleError(ClientHttpResponse response) throws IOException {
-        String body = IOUtils.toString(response.getBody())
-        throw new IOException(body)
+        BufferedReader bufferedReader = new BufferedReader(
+                new InputStreamReader(response.getBody(),"UTF-8"), 8 * 1024);
+        StringBuilder entityStringBuilder = new StringBuilder();
+        String line = null;
+        while ((line = bufferedReader.readLine()) != null) {
+            entityStringBuilder.append(line + "/n");
+        }
+        // 利用从HttpEntity中得到的String生成JsonObject
+        JSONObject resultJsonObject = new JSONObject(entityStringBuilder.toString());
+        throw new IOException((String) resultJsonObject.get("message"))
     }
 }

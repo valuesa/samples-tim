@@ -6,7 +6,7 @@ import org.junit.Test
 /**
  * Created by LuoLiBing on 15/9/24.
  */
-class InterceptableTest1 {
+class InterceptableTest1 implements GroovyInterceptable {
 
     def interceptable
 
@@ -18,8 +18,8 @@ class InterceptableTest1 {
     @Test
     void test1() {
         //println interceptable.sayHello()
-
-        interceptable.foo("mark", 20)
+        println "test1"
+        // interceptable.foo("mark", 20)
     }
 
     /**
@@ -81,5 +81,24 @@ class InterceptableTest1 {
         def test1 = new Interceptable()
         println test1.sayHello()
         println test1.foo("mark", 20)
+    }
+
+    @Test
+    void invokeMethod1() {
+        def test1 = [] as InterceptableTest1
+        test1.test1()
+    }
+
+    def invokeMethod(String name, Object args) {
+        return "called method $name $args"
+    }
+
+    def test() {
+        return 'method exists'
+    }
+
+    @Test
+    void test2() {
+        println new InterceptableTest1().test();
     }
 }

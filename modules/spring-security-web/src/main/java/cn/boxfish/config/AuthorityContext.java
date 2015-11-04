@@ -1,15 +1,5 @@
 package cn.boxfish.config;
 
-import cn.boxfish.entity.Authority;
-import cn.boxfish.entity.jpa.AuthorityJpaRepository;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * Created by LuoLiBing on 15/9/1.
  */

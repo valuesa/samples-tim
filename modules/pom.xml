@@ -21,6 +21,7 @@
         <module>groovy</module>
         <module>test-samples</module>
         <module>websocket</module>
+        <module>rabbitmq</module>
     </modules>
 
 

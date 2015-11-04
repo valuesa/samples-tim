@@ -3,6 +3,7 @@ package cn.boxfish.cache.jpa;
 import cn.boxfish.cache.entity.Book;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +27,12 @@ public class SimpleBookRepository implements BookRepository {
     public Book getByIsbn(String isbn) {
         simulateSlowService();
         return new Book(isbn, "Some book");
+    }
+
+
+    @CachePut(value = "books", key = "#isbn")
+    public void update(String isbn) {
+
     }
 
 
