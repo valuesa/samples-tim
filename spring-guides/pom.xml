@@ -31,6 +31,7 @@
         <module>multirep</module>
         <module>spring-import</module>
         <module>spring-data-jpa</module>
+        <module>reactor-thumbnailer</module>
     </modules>
 
 
