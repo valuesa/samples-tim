@@ -32,6 +32,8 @@
         <module>spring-import</module>
         <module>spring-data-jpa</module>
         <module>reactor-thumbnailer</module>
+        <module>soapwebservice</module>
+        <module>soapwebservice-server</module>
     </modules>
 
 
