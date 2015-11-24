@@ -1,7 +1,5 @@
 package cn.boxfish.restful.controller
-
 import org.springframework.web.bind.annotation.RequestMapping
-
 /**
  * Created by LuoLiBing on 15/10/15.
  */

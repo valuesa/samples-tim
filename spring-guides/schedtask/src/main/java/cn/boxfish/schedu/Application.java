@@ -29,7 +29,7 @@ public class Application {
         System.out.println("The time is now " + df.format(new Date()));
     }
 
-    @Scheduled(cron = "1/3 * * * * *")
+    @Scheduled(cron = "")
     public void tick1() {
         System.out.println("The time is now " + df.format(new Date()));
     }

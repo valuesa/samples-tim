@@ -11,7 +11,11 @@ import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+
+import java.util.Collection;
 
 /**
  * Created by LuoLiBing on 15/9/30.
@@ -28,16 +32,32 @@ public class Application {
         @Autowired
         private BookRepository bookRepository;
 
+        @Autowired
+        private CacheManager cacheManager;
+
         @Override
         public void run(String... args) throws Exception {
             // 查看是否每次都到数据库查询
             log.info(".... Fetching books");
+
+//            System.out.println(categoryRepository.getCategoryById("1"));
+//            categoryRepository.getCategoryById("1");
             log.info("isbn-1234 -->" + bookRepository.getByIsbn("isbn-1234"));
-            log.info("isbn-4567 -->" + bookRepository.getByIsbn("isbn-4567"));
             log.info("isbn-1234 -->" + bookRepository.getByIsbn("isbn-1234"));
-            log.info("isbn-4567 -->" + bookRepository.getByIsbn("isbn-4567"));
+
+            bookRepository.update("isbn-1234", "isbn-1234测试");
             log.info("isbn-1234 -->" + bookRepository.getByIsbn("isbn-1234"));
+
+            bookRepository.clear("isbn-1234");
             log.info("isbn-1234 -->" + bookRepository.getByIsbn("isbn-1234"));
+            log.info("isbn-1234 -->" + bookRepository.test("isbn-1234"));
+            final Collection<String> cacheNames = cacheManager.getCacheNames();
+            for(String cache: cacheNames) {
+                System.out.println(cache);
+            }
+//            log.info("isbn-4567 -->" + bookRepository.getByIsbn("isbn-4567"));
+//            log.info("isbn-1234 -->" + bookRepository.getByIsbn("isbn-1234"));
+//            log.info("isbn-1234 -->" + bookRepository.getByIsbn("isbn-1234"));*/
         }
     }
 
@@ -47,7 +67,30 @@ public class Application {
      */
     @Bean
     public CacheManager cacheManager() {
-        return new ConcurrentMapCacheManager("books");
+        // 普通的ConcurrentMapCache
+        return new ConcurrentMapCacheManager("books", "categorys");
+        // 默认会注入StringRedisTemplate，只能保存String，如果换成其他对象无法保存到内存当中
+        //return new RedisCacheManager(redisTemplate());
+    }
+
+    @Bean
+    JedisConnectionFactory jedisConnectionFactory() {
+        JedisConnectionFactory factory = new JedisConnectionFactory();
+        //factory.setHostName("localhost");
+        //factory.setPort(redisPort);
+        factory.setUsePool(true);
+        return factory;
+    }
+
+    /**
+     * 能保存到内存当中的对象必须是实现了Serializable接口
+     * @return
+     */
+    @Bean
+    RedisTemplate<Object, Object> redisTemplate() {
+        RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(jedisConnectionFactory());
+        return redisTemplate;
     }
 
     public static void main(String[] args) {
