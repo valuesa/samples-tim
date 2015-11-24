@@ -7,4 +7,7 @@ import cn.boxfish.cache.entity.Book;
  */
 public interface BookRepository {
     Book getByIsbn(String isbn);
+    Book update(String isbn, String desc);
+    void clear(String isbn);
+    Book test(String isbn);
 }

@@ -1,11 +1,15 @@
 package cn.boxfish.cache.entity;
 
+import java.io.Serializable;
+
 /**
  * Created by LuoLiBing on 15/9/30.
  */
-public class Book {
+public class Book implements Serializable {
     private String isbn;
     private String title;
+
+    private Category category;
 
     public Book(String isbn, String title) {
         this.isbn = isbn;
@@ -26,6 +30,15 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Override

@@ -3,6 +3,8 @@ package cn.boxfish.cache.jpa;
 import cn.boxfish.cache.entity.Book;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
@@ -16,6 +18,13 @@ public class SimpleBookRepository implements BookRepository {
 
     private final static Logger log = LoggerFactory.getLogger(SimpleBookRepository.class);
 
+    CategoryRepository simpleCategoryRepository;
+
+    @Autowired
+    public SimpleBookRepository(CategoryRepository simpleCategoryRepository) {
+        this.simpleCategoryRepository = simpleCategoryRepository;
+    }
+
 
     /**
      * books缓存
@@ -26,13 +35,40 @@ public class SimpleBookRepository implements BookRepository {
     @Cacheable("books")
     public Book getByIsbn(String isbn) {
         simulateSlowService();
-        return new Book(isbn, "Some book");
+        Book book = new Book(isbn, "Some book");
+        /*for(int i=0; i<10; i++) {
+            //book.setCategory(simpleCategoryRepository.getCategoryById("1"));
+        }*/
+        return book;
     }
 
 
+    /**
+     * 更新books
+     * @param isbn
+     */
     @CachePut(value = "books", key = "#isbn")
-    public void update(String isbn) {
+    public Book update(String isbn, String desc) {
+        return new Book(isbn, desc);
+    }
 
+
+    /**
+     * 清除isbn，不需要有方法实体
+     * @param isbn
+     */
+    @CacheEvict(value = "books", key = "#isbn")
+    public void clear(String isbn) {
+
+    }
+
+    /**
+     * 同类方法调用，不会使用缓存
+     * @param isbn
+     * @return
+     */
+    public Book test(String isbn) {
+        return getByIsbn(isbn);
     }
 
 
