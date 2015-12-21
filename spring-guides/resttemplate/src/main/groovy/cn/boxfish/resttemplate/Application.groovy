@@ -3,9 +3,7 @@ import groovy.util.logging.Slf4j
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.http.HttpEntity
 import org.springframework.web.client.RestTemplate
-import sun.misc.BASE64Encoder
 /**
  * Created by LuoLiBing on 15/9/30.
  */
@@ -36,7 +34,8 @@ class Application implements CommandLineRunner {
         } catch (Exception e) {
             println e.cause
         }*/
-        BASE64Encoder encoder = new BASE64Encoder();
+
+        /*BASE64Encoder encoder = new BASE64Encoder();
 
         def result = [:]
         result.put("base", encoder.encode(new File("/share/资源/图片/looks of complete distain 不屑的表情.jpg").bytes))
@@ -45,6 +44,10 @@ class Application implements CommandLineRunner {
 
         RestTemplate template = new RestTemplate()
         def response = template.postForEntity("http://localhost:8080/upload", entity, String.class)
-        println response
+        println response*/
+
+        RestTemplate template = new RestTemplate()
+        def html = template.getForEntity("https://www.baidu.com/s?wd=NBA", String.class)
+        println html.body
     }
 }

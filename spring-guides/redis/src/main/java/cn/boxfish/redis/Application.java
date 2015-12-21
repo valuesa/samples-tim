@@ -13,6 +13,8 @@ import org.springframework.data.redis.listener.PatternTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -79,7 +81,10 @@ public class Application {
 
         logger.info("Sending message...");
         // 发送消息到chat当中
-        template.convertAndSend("chat", "Hello from Redis!");
+        Map<String, String> message = new HashMap<>();
+        message.put("message", "hello!");
+        message.put("date", "20151111");
+        template.convertAndSend("onekey", message);
 
         latch.await();
 

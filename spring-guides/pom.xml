@@ -36,6 +36,10 @@
         <module>soapwebservice-server</module>
         <module>redis</module>
         <module>redis-client</module>
+        <module>j2cache</module>
+        <module>version</module>
+        <module>twolevelcache</module>
+        <module>envers</module>
     </modules>
 
 

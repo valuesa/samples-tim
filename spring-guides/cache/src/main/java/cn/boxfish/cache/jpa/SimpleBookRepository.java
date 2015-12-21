@@ -32,7 +32,7 @@ public class SimpleBookRepository implements BookRepository {
      * @return
      */
     @Override
-    @Cacheable("books")
+    @Cacheable(value = "books", key = "#isbn", condition = "false")
     public Book getByIsbn(String isbn) {
         simulateSlowService();
         Book book = new Book(isbn, "Some book");
@@ -57,7 +57,7 @@ public class SimpleBookRepository implements BookRepository {
      * 清除isbn，不需要有方法实体
      * @param isbn
      */
-    @CacheEvict(value = "books", key = "#isbn")
+    @CacheEvict(value = "books", key = "#isbn", allEntries = false)
     public void clear(String isbn) {
 
     }

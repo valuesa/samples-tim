@@ -22,7 +22,7 @@ public class Receiver {
      * MessageListenerAdapter 适配器默认适配调用的方法
      * @param message
      */
-    public void receiveMessage(String message) {
+    public void receiveMessage(Object message) {
         logger.info("收到消息<" + message + ">");
         latch.countDown();
     }

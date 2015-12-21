@@ -23,7 +23,6 @@ public class FormValidateController extends WebMvcConfigurerAdapter {
     @Autowired
     private FormValidator validator;
 
-
     @InitBinder("person")
     public void initBinder(WebDataBinder binder) {
         binder.addValidators(validator);

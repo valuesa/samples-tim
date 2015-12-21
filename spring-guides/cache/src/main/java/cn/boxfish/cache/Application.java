@@ -9,8 +9,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.concurrent.ConcurrentMapCacheManager;
+import org.springframework.cache.interceptor.KeyGenerator;
+import org.springframework.cache.interceptor.SimpleKeyGenerator;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -43,14 +45,14 @@ public class Application {
 //            System.out.println(categoryRepository.getCategoryById("1"));
 //            categoryRepository.getCategoryById("1");
             log.info("isbn-1234 -->" + bookRepository.getByIsbn("isbn-1234"));
-            log.info("isbn-1234 -->" + bookRepository.getByIsbn("isbn-1234"));
+            log.info("isbn-2345 -->" + bookRepository.getByIsbn("isbn-2345"));
 
-            bookRepository.update("isbn-1234", "isbn-1234测试");
+            // bookRepository.update("isbn-1234", "isbn-1234测试");
             log.info("isbn-1234 -->" + bookRepository.getByIsbn("isbn-1234"));
 
             bookRepository.clear("isbn-1234");
             log.info("isbn-1234 -->" + bookRepository.getByIsbn("isbn-1234"));
-            log.info("isbn-1234 -->" + bookRepository.test("isbn-1234"));
+            log.info("isbn-1234 -->" + bookRepository.getByIsbn("isbn-2345"));
             final Collection<String> cacheNames = cacheManager.getCacheNames();
             for(String cache: cacheNames) {
                 System.out.println(cache);
@@ -68,9 +70,9 @@ public class Application {
     @Bean
     public CacheManager cacheManager() {
         // 普通的ConcurrentMapCache
-        return new ConcurrentMapCacheManager("books", "categorys");
+        //return new ConcurrentMapCacheManager("books", "categorys");
         // 默认会注入StringRedisTemplate，只能保存String，如果换成其他对象无法保存到内存当中
-        //return new RedisCacheManager(redisTemplate());
+        return new RedisCacheManager(redisTemplate());
     }
 
     @Bean
@@ -95,6 +97,11 @@ public class Application {
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
+    }
+
+    @Bean
+    KeyGenerator keyGenerator() {
+        return new SimpleKeyGenerator();
     }
 
 }

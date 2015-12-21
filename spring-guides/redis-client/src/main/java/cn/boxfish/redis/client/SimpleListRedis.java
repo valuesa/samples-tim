@@ -1,15 +1,11 @@
 package cn.boxfish.redis.client;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import redis.clients.jedis.Jedis;
 
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -19,37 +15,33 @@ import java.util.Set;
 @Component
 public class SimpleListRedis implements ListRedis {
 
-    @Autowired
-    private RedisTemplate redisTemplate;
+//    @Autowired
+//    private RedisTemplate redisTemplate;
 
-    @Cacheable(value = "allBaseSet")
+    @Cacheable(value = "allBase")
     @Override
     public Set<Map<String, Object>> list() {
-        final Set<String> localhost = new Jedis("localhost").zrange("allBaseSet~keys", 0, 10);
-        System.out.println(localhost);
-        final Set allBaseSet = redisTemplate.boundZSetOps("allBaseSet").range(0, 10);
-        System.out.println(allBaseSet);
         return init();
     }
 
-    @Caching(evict = {
-            @CacheEvict(value="baseSet", allEntries=true),
-            @CacheEvict(value="allBaseSet", allEntries=true)
-    })
+//    @Caching(evict = {
+//            @CacheEvict(value="baseSet", allEntries=true),
+//            @CacheEvict(value="allBaseSet", allEntries=false)
+//    })
     /*@CacheEvict(value = {"baseSet", "allBaseSet"}, key = "#id", allEntries = true, beforeInvocation = false)*/
     @Override
+    @CacheEvict(value = {"base", "allBase"}, key = "#id", allEntries = false)
     public Map<String, Object> add(Long id, Map<String, Object> beanMap) {
-
         return beanMap;
     }
 
-    @CacheEvict(value = {"baseSet", "allBaseSet"}, key = "#id", allEntries = true, beforeInvocation = false)
+    @CacheEvict(value = {"base", "allBase"}, key = "#id", allEntries = false, beforeInvocation = false)
     @Override
     public void delete(Long id) {
 
     }
 
-    @Cacheable(value = "baseSet", key = "#id")
+    @Cacheable(value = "base", key = "#id")
     @Override
     public Map<String, Object> get(Long id) {
         return null;
@@ -57,7 +49,7 @@ public class SimpleListRedis implements ListRedis {
 
 
     private Set<Map<String, Object>> init() {
-        Set<Map<String, Object>> set = new HashSet<>();
+        Set<Map<String, Object>> set = new LinkedHashSet<>();
         Map<String, Object> beanMap = new HashMap<>();
         beanMap.put("id", 1L);
         beanMap.put("name", "aaaaaaaaaa");

@@ -26,4 +26,15 @@ class CategoryTest {
 
         println isbn.toSSN()
     }
+
+    @Test
+    void test2() {
+        Object obj = new Person()
+        println obj.hasProperty("CACHE_KEY1")
+    }
+
+
+    class Person {
+        public final static String CACHE_KEY = "persons"
+    }
 }

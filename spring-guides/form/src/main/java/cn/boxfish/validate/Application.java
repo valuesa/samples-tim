@@ -1,7 +1,5 @@
 package cn.boxfish.validate;
 
-import cn.boxfish.data.entity.Tag;
-import cn.boxfish.data.entity.jpa.impl.TagJpaRepositoryImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -20,8 +18,5 @@ public class Application {
         for(String beanName: beanNames) {
             System.out.println(beanName);
         }
-        TagJpaRepositoryImpl repository = ctx.getBean(TagJpaRepositoryImpl.class);
-        Tag tag = repository.tag(1L);
-        System.out.println(tag.getId() + ":" + tag.getName());
     }
 }

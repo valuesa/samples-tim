@@ -1,6 +1,5 @@
 package cn.boxfish;
 
-import org.apache.commons.lang.StringEscapeUtils;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -10,6 +9,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.LinkedTransferQueue;
+import java.util.concurrent.TransferQueue;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -86,8 +90,8 @@ public class Test2 {
 
     @Test
     public void encode() {
-        final String s = StringEscapeUtils.unescapeHtml("<span>The plant has plenty of&nbsp;buds&nbsp;but no flowers yet..m4a</span>");
-        System.out.println(s);
+//        final String s = StringEscapeUtils.unescapeHtml("<span>The plant has plenty of&nbsp;buds&nbsp;but no flowers yet..m4a</span>");
+//        System.out.println(s);
     }
 
     @Test
@@ -123,6 +127,63 @@ public class Test2 {
 
         final Path relativize = basePath.relativize(path);
         System.out.println(relativize.toString());
+    }
+
+    @Test
+    public void testBuffer() {
+        System.out.println(new Integer(1).toString());
+    }
+
+    @Test
+    public void testLock() throws InterruptedException {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    updateCache();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+        Thread.sleep(1000);
+        for(int i=0; i<1000; i++) {
+            int k = new Random().nextInt(100);
+            queue.add(k);
+        }
+    }
+
+    Map<String, String> resultMap = new HashMap<>();
+
+    static TransferQueue<Integer> queue = new LinkedTransferQueue<>();
+
+    static void updateCache() throws InterruptedException {
+        int i = 0;
+        while(true) {
+            Thread.sleep(100);
+            Integer k = queue.take();
+            queue.remove(k);
+            System.out.println(i++);
+            System.out.println(queue.size());
+        }
+    }
+
+    @Test
+    public void test1() throws InterruptedException {
+        TransferQueue<Integer> queue = new LinkedTransferQueue<>();
+        queue.add(1);
+        queue.add(2);
+        queue.add(3);
+        queue.add(4);
+        queue.add(1);
+        queue.add(1);
+
+        while(true) {
+            Integer val = queue.take();
+            queue.remove(val);
+            System.out.println(val);
+        }
     }
 
 }

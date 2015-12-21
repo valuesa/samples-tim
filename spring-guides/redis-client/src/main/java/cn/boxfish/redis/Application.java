@@ -1,13 +1,15 @@
 package cn.boxfish.redis;
 
-import cn.boxfish.redis.client.ZSetRedis;
+import cn.boxfish.redis.client.ListRedis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.cache.ehcache.EhCacheCacheManager;
+import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,11 +30,14 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-    /*@Autowired
-    private ListRedis listRedis;*/
-
     @Autowired
-    private ZSetRedis listRedis;
+    private ListRedis listRedis;
+
+    /*@Autowired
+    private ZSetRedis listRedis;*/
+
+//    @Autowired
+//    private OperationsTest listRedis;
 
     @RequestMapping(value = "/list")
     public Set<Map<String, Object>> list() {
@@ -72,7 +77,10 @@ public class Application {
         List<String> cacheNames = new ArrayList<>();
         cacheNames.add("baseSet");
         cacheNames.add("allBaseSet");
-        return new RedisCacheManager(redisTemplate(), cacheNames);
+        EhCacheCacheManager cacheManager = new EhCacheCacheManager();
+        cacheManager.setCacheManager(ehCacheManagerFactoryBean().getObject());
+        return cacheManager;
+        //return new RedisCacheManager(redisTemplate(), cacheNames);
     }
 
     @Bean
@@ -94,4 +102,20 @@ public class Application {
         redisTemplate.setConnectionFactory(jedisConnectionFactory());
         return redisTemplate;
     }
+
+
+    /********************* 一级缓存 **********************/
+    /**
+     * ehcache一级缓存
+     * @return
+     */
+    @Bean
+    public EhCacheManagerFactoryBean ehCacheManagerFactoryBean() {
+        EhCacheManagerFactoryBean cacheManagerFactoryBean = new EhCacheManagerFactoryBean();
+        cacheManagerFactoryBean.setShared(true);
+        cacheManagerFactoryBean.setCacheManagerName("cacheManger");
+        cacheManagerFactoryBean.setConfigLocation(new ClassPathResource("ehcache.xml"));
+        return cacheManagerFactoryBean;
+    }
+
 }
