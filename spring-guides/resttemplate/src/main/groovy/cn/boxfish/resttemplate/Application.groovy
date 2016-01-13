@@ -1,9 +1,12 @@
 package cn.boxfish.resttemplate
+
+import cn.boxfish.resttemplate.exception.MyCustomException
 import groovy.util.logging.Slf4j
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.web.client.RestTemplate
+
 /**
  * Created by LuoLiBing on 15/9/30.
  */
@@ -46,8 +49,14 @@ class Application implements CommandLineRunner {
         def response = template.postForEntity("http://localhost:8080/upload", entity, String.class)
         println response*/
 
-        RestTemplate template = new RestTemplate()
+        /*RestTemplate template = new RestTemplate()
         def html = template.getForEntity("https://www.baidu.com/s?wd=NBA", String.class)
-        println html.body
+        println html.body*/
+
+
+        RestTemplate template = new RestTemplate()
+        template.setErrorHandler(new MyCustomException())
+        def list = template.getForObject("https://a1.easemob.com/boxfish/boxfish/users/5ee0070c40a7c781507b38c59c3eb8d4?access_token=YWMtcTAJ8HfYEeWVSdcUb0KLhQAAAVG-x2-c57u7dPjFH-x4MJ7p4SK9UwCv_Cc", Map.class)
+        println list
     }
 }

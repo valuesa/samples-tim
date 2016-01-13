@@ -9,6 +9,10 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <properties>
+        <!--解决spring-data-envers版本问题-->
+        <hibernate.version>4.3.11.Final</hibernate.version>
+    </properties>
     <artifactId>envers</artifactId>
 
     <dependencies>
@@ -23,7 +27,7 @@
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-envers</artifactId>
-            <version>0.2.0.RELEASE</version>
+            <version>0.3.0.RELEASE</version>
         </dependency>
 
         <dependency>

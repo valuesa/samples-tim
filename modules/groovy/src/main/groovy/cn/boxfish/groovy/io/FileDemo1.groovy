@@ -1,14 +1,11 @@
 package cn.boxfish.groovy.io
-
 import groovy.io.FileType
-import org.junit.Before
+import org.apache.commons.io.FilenameUtils
 import org.junit.Test
 
 import java.nio.file.FileVisitResult
 import java.nio.file.Files
-import java.nio.file.Path
 import java.nio.file.Paths
-
 /**
  * Created by LuoLiBing on 15/7/18.
  */
@@ -17,7 +14,7 @@ class FileDemo1 implements Serializable {
     private String filePath;
     private String basePath;
 
-    @Before
+    //@Before
     void init() {
         filePath = this.getClass().getClassLoader().getResource("luolibing.log").getPath();
         basePath = this.class.getClassLoader().getResource("").getPath()
@@ -241,7 +238,9 @@ class FileDemo1 implements Serializable {
 
     @Test
     void testIni() {
-        def ini = Paths.get("")
-
+        def filename = "aaaa.txt"
+        use(FilenameUtils) {
+            println  filename.extension
+        }
     }
 }

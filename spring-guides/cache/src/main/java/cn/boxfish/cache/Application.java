@@ -1,5 +1,6 @@
 package cn.boxfish.cache;
 
+import cn.boxfish.cache.entity.Book;
 import cn.boxfish.cache.jpa.BookRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +16,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -45,8 +48,9 @@ public class Application {
 //            System.out.println(categoryRepository.getCategoryById("1"));
 //            categoryRepository.getCategoryById("1");
             log.info("isbn-1234 -->" + bookRepository.getByIsbn("isbn-1234"));
-            log.info("isbn-2345 -->" + bookRepository.getByIsbn("isbn-2345"));
+            log.info("isbn-1234 -->" + bookRepository.getByIsbn("isbn-1234"));
 
+            cacheManager.getCache("books").put("isbn-1234", new Book("isbn-1234", "Some book"));
             // bookRepository.update("isbn-1234", "isbn-1234测试");
             log.info("isbn-1234 -->" + bookRepository.getByIsbn("isbn-1234"));
 
@@ -75,6 +79,23 @@ public class Application {
         return new RedisCacheManager(redisTemplate());
     }
 
+
+    /**
+     * 序列化key
+     * @param jedisConnectionFactory
+     * @return
+     */
+    @Bean
+    RedisTemplate<Object, Object> redisTemplate(JedisConnectionFactory jedisConnectionFactory) {
+        RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(jedisConnectionFactory);
+        // key的序列化
+        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        // value的序列化
+        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(Object.class));
+        return redisTemplate;
+    }
+
     @Bean
     JedisConnectionFactory jedisConnectionFactory() {
         JedisConnectionFactory factory = new JedisConnectionFactory();
@@ -95,6 +116,7 @@ public class Application {
         return redisTemplate;
     }
 
+
     public static void main(String[] args) {
         SpringApplication.run(Application.class, args);
     }
@@ -104,4 +126,8 @@ public class Application {
         return new SimpleKeyGenerator();
     }
 
+    /*@Bean
+    public UseCacheExclusivelyInReadOnlyModeAspect readOnlyModeAspect(@Value("${app.mode.read-only: true}") boolean readOnly) {
+        return new UseCacheExclusivelyInReadOnlyModeAspect(readOnly);
+    }*/
 }

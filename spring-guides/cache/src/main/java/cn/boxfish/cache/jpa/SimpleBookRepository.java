@@ -28,11 +28,14 @@ public class SimpleBookRepository implements BookRepository {
 
     /**
      * books缓存
+     * condition 表示执行方法之前是否先到缓存中查询
+     * 如果设置为false,则每次都执行该方法,然后将返回结果随后缓存起来,这样相当于只写
+     * 如果设置为true,则每次执行方法之前都到缓存中查询
      * @param isbn
      * @return
      */
     @Override
-    @Cacheable(value = "books", key = "#isbn", condition = "false")
+    @Cacheable(value = "books", key = "#isbn", unless = "T(java.lang.System).getProperty('app.mode.read-only', 'false')")
     public Book getByIsbn(String isbn) {
         simulateSlowService();
         Book book = new Book(isbn, "Some book");

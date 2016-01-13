@@ -23,6 +23,8 @@
         <module>websocket</module>
         <module>rabbitmq</module>
         <module>spring-redis</module>
+        <module>clojure</module>
+        <module>groovy-actor</module>
     </modules>
 
 

@@ -40,6 +40,8 @@
         <module>version</module>
         <module>twolevelcache</module>
         <module>envers</module>
+        <module>aop</module>
+        <module>flyway</module>
     </modules>
 
 

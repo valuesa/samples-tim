@@ -24,12 +24,12 @@ public class Application {
     }
 
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedDelay = 5000)
     public void tick() {
         System.out.println("The time is now " + df.format(new Date()));
     }
 
-    @Scheduled(cron = "")
+    //@Scheduled(cron = "")
     public void tick1() {
         System.out.println("The time is now " + df.format(new Date()));
     }

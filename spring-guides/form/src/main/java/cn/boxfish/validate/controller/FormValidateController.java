@@ -30,7 +30,7 @@ public class FormValidateController extends WebMvcConfigurerAdapter {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String showForm(Person person) {
-        return "login";
+        return "forward: index.html";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -41,4 +41,5 @@ public class FormValidateController extends WebMvcConfigurerAdapter {
         }
         return "redirect:/results";
     }
+
 }
