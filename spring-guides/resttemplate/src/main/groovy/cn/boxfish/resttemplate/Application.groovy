@@ -56,7 +56,7 @@ class Application implements CommandLineRunner {
 
         RestTemplate template = new RestTemplate()
         template.setErrorHandler(new MyCustomException())
-        def list = template.getForObject("https://a1.easemob.com/boxfish/boxfish/users/5ee0070c40a7c781507b38c59c3eb8d4?access_token=YWMtcTAJ8HfYEeWVSdcUb0KLhQAAAVG-x2-c57u7dPjFH-x4MJ7p4SK9UwCv_Cc", Map.class)
+        def list = template.getForObject("http://localhost:8080/check1?email=aaaa...aa", Map.class)
         println list
     }
 }

@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: development
+    active: test
 
 ---
 spring:
@@ -11,13 +11,15 @@ db:
   tables: a,b,c,d
 
 ---
+data: luolibing
 server:
   port: 9999
 spring:
  profiles: test
- view:
-  prefix: /WEB-INF/jsp/
-  suffix: .jsp
+ mvc:
+   view:
+    prefix: /WEB-INF/jsp/
+    suffix: .jsp
 db:
   username: admin_test
   password: 12345_test

@@ -1,5 +1,6 @@
 package cn.boxfish;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -184,6 +185,14 @@ public class Test2 {
             queue.remove(val);
             System.out.println(val);
         }
+    }
+
+
+    @Test
+    public void readJson() throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        final Map map = objectMapper.readValue(Files.newInputStream(Paths.get("/share/json/L3NoYXJlL3N2bi_lv6vkuZDlr5LlgYcgU1RBR0UxLeS6uuaVmeS4gy8wMDIu5Yib5oSP56-H77ya5Zyj6K-e6ICB5Lq65piv6L-Z5qC36YCB56S854mp55qELnhsc3g.json")), Map.class);
+        System.out.println(map);
     }
 
 }

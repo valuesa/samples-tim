@@ -79,6 +79,7 @@ public class BatchConfiguration {
 
     /**
      * 整个任务JOB
+     * incrementer新增参数,设置监听,设置执行步骤
      * @param jobs
      * @param s1
      * @param listener
@@ -97,7 +98,7 @@ public class BatchConfiguration {
 
 
     /**
-     * 其中的一部
+     * 步骤1
      * @param stepBuilderFactory
      * @param reader
      * @param writer
@@ -107,6 +108,7 @@ public class BatchConfiguration {
     @Bean
     public Step step1(StepBuilderFactory stepBuilderFactory, ItemReader<Person> reader,
                       ItemWriter<Person> writer, ItemProcessor<Person, Person> processor) {
+        // 批量任务 读->处理->写入  块chunk(10) 10个一组
         return stepBuilderFactory.get("step1")
                 .<Person, Person>chunk(10)
                 .reader(reader)

@@ -1,12 +1,17 @@
 package cn.boxfish.restful.entity
 
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.JsonProperty
+
 /**
  * Created by LuoLiBing on 15/9/29.
  */
+@JsonInclude
 class Greeting {
 
     private final long id
     private final String content
+    @JsonProperty(value = "_name")
     private String name = "like"
 
     public Greeting(long id, String content) {

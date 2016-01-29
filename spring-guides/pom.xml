@@ -26,7 +26,6 @@
         <module>async</module>
         <module>submission</module>
         <module>reactor</module>
-        <module>springboot</module>
         <module>jquery</module>
         <module>multirep</module>
         <module>spring-import</module>
@@ -42,6 +41,14 @@
         <module>envers</module>
         <module>aop</module>
         <module>flyway</module>
+        <module>log4j</module>
+        <module>session-redis</module>
+        <module>hateoas</module>
+        <module>atmosphere</module>
+        <module>integration</module>
+        <module>integration-webservice</module>
+        <module>integration-http</module>
+        <module>integration-client</module>
     </modules>
 
 
