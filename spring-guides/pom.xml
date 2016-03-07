@@ -49,6 +49,8 @@
         <module>integration-webservice</module>
         <module>integration-http</module>
         <module>integration-client</module>
+        <module>metric-redis</module>
+        <module>redis-action</module>
     </modules>
 
 

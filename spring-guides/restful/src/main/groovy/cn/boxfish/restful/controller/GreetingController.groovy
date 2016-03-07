@@ -1,5 +1,6 @@
 package cn.boxfish.restful.controller
 import cn.boxfish.restful.entity.Greeting
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import groovy.util.logging.Slf4j
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
@@ -18,6 +19,7 @@ class GreetingController {
 
 
     @RequestMapping("/greeting")
+    @JsonIgnoreProperties(ignoreUnknown = true, value = "content")
     public Greeting greeting(@RequestParam(value = "name", defaultValue = "world") String name) {
         return new Greeting(counter.incrementAndGet(),
                 String.format(template, name));

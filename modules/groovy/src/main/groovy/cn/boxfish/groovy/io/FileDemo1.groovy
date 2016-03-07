@@ -6,6 +6,8 @@ import org.junit.Test
 import java.nio.file.FileVisitResult
 import java.nio.file.Files
 import java.nio.file.Paths
+import java.util.concurrent.TimeUnit
+
 /**
  * Created by LuoLiBing on 15/7/18.
  */
@@ -242,5 +244,13 @@ class FileDemo1 implements Serializable {
         use(FilenameUtils) {
             println  filename.extension
         }
+    }
+
+    @Test
+    void shellTest() {
+
+        def execute = "ls /share".execute()
+        execute.waitFor(5000, TimeUnit.MILLISECONDS)
+        println "end"
     }
 }

@@ -1,12 +1,10 @@
 package cn.boxfish.resttemplate
 
-import cn.boxfish.resttemplate.exception.MyCustomException
 import groovy.util.logging.Slf4j
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.web.client.RestTemplate
-
 /**
  * Created by LuoLiBing on 15/9/30.
  */
@@ -55,8 +53,9 @@ class Application implements CommandLineRunner {
 
 
         RestTemplate template = new RestTemplate()
-        template.setErrorHandler(new MyCustomException())
-        def list = template.getForObject("http://localhost:8080/check1?email=aaaa...aa", Map.class)
-        println list
+        //template.setErrorHandler(new MyCustomException())
+        HashMap map = template.getForObject("http://localhost:8080/check1?email=aaaa...aa", paramObj, HashMap.class)
+        println map
     }
+
 }

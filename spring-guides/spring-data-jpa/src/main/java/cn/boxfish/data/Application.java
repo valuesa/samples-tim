@@ -37,4 +37,11 @@ public class Application {
         School school = schoolService.find(id);
         return school;
     }
+
+    @RequestMapping(value = "/school/save", method = RequestMethod.GET)
+    public String save() {
+        // 11970
+        schoolService.save(11970l);
+        return "";
+    }
 }

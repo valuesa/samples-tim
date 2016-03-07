@@ -189,6 +189,25 @@ public class Test2 {
 
 
     @Test
+    public void captalize() {
+        // 断句  符号 ,.?!
+        String str = "i has a good idea!gooDbye world.";
+        boolean flag = true;
+        final char[] chars = str.toCharArray();
+        for(Character ch:chars) {
+            int num = (int) ch;
+            if(flag && Character.isLowerCase(ch)) {
+                ch = Character.toUpperCase(ch);
+            } else {
+                flag = (num == (int)',' || num == (int)'.' || num == (int)'!' || num == (int)'?');
+            }
+        }
+        System.out.println(chars);
+
+    }
+
+
+    @Test
     public void readJson() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         final Map map = objectMapper.readValue(Files.newInputStream(Paths.get("/share/json/L3NoYXJlL3N2bi_lv6vkuZDlr5LlgYcgU1RBR0UxLeS6uuaVmeS4gy8wMDIu5Yib5oSP56-H77ya5Zyj6K-e6ICB5Lq65piv6L-Z5qC36YCB56S854mp55qELnhsc3g.json")), Map.class);

@@ -82,6 +82,7 @@ public class Application {
 
     /**
      * 序列化key
+     * https://jira.spring.io/browse/DATAREDIS-354 BUG解决
      * @param jedisConnectionFactory
      * @return
      */
@@ -130,4 +131,5 @@ public class Application {
     public UseCacheExclusivelyInReadOnlyModeAspect readOnlyModeAspect(@Value("${app.mode.read-only: true}") boolean readOnly) {
         return new UseCacheExclusivelyInReadOnlyModeAspect(readOnly);
     }*/
+
 }
