@@ -12,6 +12,7 @@
         <module>modules</module>
         <module>spring-guides</module>
         <module>spring-boot-sample</module>
+        <module>spring-cloud</module>
 
     </modules>
     <dependencies>
