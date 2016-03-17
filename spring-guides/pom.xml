@@ -55,6 +55,7 @@
         <module>reback</module>
         <module>reback-resource</module>
         <module>system-service</module>
+        <module>dto-demo</module>
     </modules>
 
 

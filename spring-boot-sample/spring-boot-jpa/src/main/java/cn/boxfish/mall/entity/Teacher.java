@@ -1,9 +1,6 @@
 package cn.boxfish.mall.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by LuoLiBing on 16/3/17.
@@ -13,7 +10,7 @@ import javax.persistence.Table;
 public class Teacher {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;

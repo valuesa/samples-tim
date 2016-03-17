@@ -2,6 +2,7 @@ package cn.boxfish.mall.web;
 
 import cn.boxfish.mall.entity.*;
 import cn.boxfish.mall.entity.jpa.*;
+import cn.boxfish.mall.service.Test1Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,6 +39,9 @@ public class Test1Controller {
 
     @Autowired
     TeacherJpaRepository teacherJpaRepository;
+
+    @Autowired
+    Test1Service test1Service;
 
     @RequestMapping(value = "/service/{id}", method = RequestMethod.GET)
     public Service service(@PathVariable Long id) {
@@ -153,6 +157,17 @@ public class Test1Controller {
     @RequestMapping(value = "/teacher/page/{roleId}")
     public Page<Teacher> findTeacherPage(@PathVariable Long roleId) {
         return teacherJpaRepository.findTeacher1(new PageRequest(0, 10), roleId);
+    }
+
+    @RequestMapping(value = "/teacher/{id}")
+    public Teacher findOne(@PathVariable Long id) {
+        // Teacher teacher = test1Service.findTeacher(id);
+        Teacher teacher = new Teacher();
+        // teacher已经是游离态
+        teacher.setId(id);
+        teacher.setName("测试111111111");
+        test1Service.save(teacher);
+        return teacher;
     }
 
 }
