@@ -22,7 +22,7 @@ class CustomerController extends BaseController {
         return "aaaa"
     }
 
-    @RequestMapping(value = "/get/{username:*+}", method = RequestMethod.GET)
+    @RequestMapping(value = "/get/{username}", method = RequestMethod.GET)
     public String get(@PathVariable String username) {
         username
     }

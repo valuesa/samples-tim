@@ -51,6 +51,10 @@
         <module>integration-client</module>
         <module>metric-redis</module>
         <module>redis-action</module>
+        <module>debry</module>
+        <module>reback</module>
+        <module>reback-resource</module>
+        <module>system-service</module>
     </modules>
 
 

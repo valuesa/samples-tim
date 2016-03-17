@@ -1,11 +1,6 @@
 package cn.boxfish.data.entity;
 
-import org.hibernate.annotations.*;
-import org.hibernate.annotations.CascadeType;
-
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -53,9 +48,7 @@ public class School implements Serializable {
     @JoinColumn(name="id")
     private SchoolVist schoolVist;
 
-    @OneToMany(targetEntity = Teacher.class, fetch = FetchType.LAZY)
-    @Cascade(CascadeType.ALL)
-    @JoinColumn(name="school_id")
+    @Transient
     private List<Teacher> teacherList;
 
     /**

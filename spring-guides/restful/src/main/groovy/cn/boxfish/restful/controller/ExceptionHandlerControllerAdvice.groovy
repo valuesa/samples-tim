@@ -25,7 +25,7 @@ class ExceptionHandlerControllerAdvice {
     @ResponseStatus(HttpStatus.OK)
     public @ResponseBody Map<String, Object> allCatchException(Exception e) {
         e.printStackTrace();
-        Map<String, Object> result = Maps.newHashMap();
+        Map<String, Object> result = new HashMap<>()
         result.put("success", "N");
         result.put("message", e.getMessage());
         return result;

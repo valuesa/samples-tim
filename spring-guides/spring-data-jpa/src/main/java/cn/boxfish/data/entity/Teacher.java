@@ -57,8 +57,6 @@ public class Teacher {
 
     private String status;
 
-    @ManyToOne(targetEntity = School.class,fetch = FetchType.EAGER)
-    @JoinColumn(name="school_id")
     private School school;
 
     public final static String GENDER_MALE= "0";

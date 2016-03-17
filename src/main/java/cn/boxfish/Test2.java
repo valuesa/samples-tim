@@ -214,4 +214,9 @@ public class Test2 {
         System.out.println(map);
     }
 
+    @Test
+    public void system() {
+        System.out.println(System.getProperties());
+    }
+
 }

@@ -34,6 +34,12 @@ public class ExecuteAspect {
         System.out.println("afterExecute !!!");
     }
 
+    @Around(value = "execution(* cn.boxfish.aop.web.*Controller.*(..))")
+    public Object handleController(ProceedingJoinPoint joinPoint) throws Throwable {
+        System.out.println(joinPoint);
+        return joinPoint.proceed();
+    }
+
     /**
      * 环绕建议
      * @param joinPoint
@@ -63,6 +69,20 @@ public class ExecuteAspect {
             return null;
         } finally {
             System.out.println("after service");
+        }
+    }
+
+
+    @Around("@annotation(org.springframework.web.bind.annotation.RestController)")
+    public Object test(ProceedingJoinPoint joinPoint) {
+        System.out.println("before controller");
+        try {
+            return joinPoint.proceed();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+            return null;
+        } finally {
+            System.out.println("after controller");
         }
     }
 

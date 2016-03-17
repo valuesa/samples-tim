@@ -3,6 +3,7 @@ package redis;
 import org.junit.Before;
 import org.junit.Test;
 import redis.clients.jedis.Jedis;
+import redis.service.Chapter01;
 
 import java.util.Random;
 
@@ -23,6 +24,6 @@ public class Chapter01Test {
         Jedis conn = new Jedis();
         conn.select(10);
         int random = new Random().nextInt(100);
-        chapter01.postArticle(conn, "admin" + random, "测试章节" + random, "http://www.baidu.com/1.html");
+        //chapter01.postArticle("admin" + random, "测试章节" + random, "http://www.baidu.com/1.html");
     }
 }

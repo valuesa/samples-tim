@@ -1,5 +1,4 @@
 package cn.boxfish.restful
-
 import groovy.util.logging.Slf4j
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
