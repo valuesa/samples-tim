@@ -3,12 +3,14 @@ package cn.boxfish.dto.entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by LuoLiBing on 16/3/17.
  */
+@MappedSuperclass
 public class PersistentObject implements Serializable {
 
     @Id

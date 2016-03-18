@@ -1,7 +1,9 @@
 package cn.boxfish.dto.view;
 
+import cn.boxfish.dto.merger.SimpleEnumMerger;
 import org.jdto.annotation.Source;
 import org.jdto.annotation.Sources;
+import org.jdto.mergers.AgeMerger;
 import org.jdto.mergers.DateFormatMerger;
 import org.jdto.mergers.StringFormatMerger;
 
@@ -21,6 +23,49 @@ public class TeacherView implements Serializable {
             merger = StringFormatMerger.class, mergerParam = "%s 的生日是 %s")
     private String description;
 
-    /*@Source(value = "gender", merger = EnumMerger.class, mergerParam = "")
-    private String gender;*/
+    @Source(value = "gender", merger = SimpleEnumMerger.class, mergerParam = "gender")
+    private String gender;
+
+    @Source(value = "birthday", merger = AgeMerger.class)
+    private Integer age;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
+    }
 }

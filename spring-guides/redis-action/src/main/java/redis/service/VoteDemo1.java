@@ -27,7 +27,7 @@ public class VoteDemo1 {
 
     /**
      * 发表文章
-     * 1/添加一个文章投票的一个集合
+     * 1    添加一个文章投票的一个集合
      *
      * @param articleBean
      * @return

@@ -1,8 +1,7 @@
 package cn.boxfish.dto.service;
 
+import cn.boxfish.dto.entity.Teacher;
 import cn.boxfish.dto.entity.jpa.TeacherJpaRepository;
-import cn.boxfish.dto.view.TeacherView;
-import org.jdto.DTOBinder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +14,12 @@ public class TeacherService {
     @Autowired
     private TeacherJpaRepository teacherJpaRepository;
 
-    @Autowired
-    private DTOBinder binder;
+    public Teacher findTeacher(Long id) {
+        return teacherJpaRepository.findOne(id);
+    }
 
-    public TeacherView findTeacher(Long id) {
-        return binder.bindFromBusinessObject(TeacherView.class, teacherJpaRepository.findOne(id));
+
+    public void save(Teacher teacher) {
+        System.out.println(teacher);
     }
 }

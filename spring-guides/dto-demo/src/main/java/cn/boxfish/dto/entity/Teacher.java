@@ -1,5 +1,6 @@
 package cn.boxfish.dto.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.util.Date;
@@ -16,6 +17,9 @@ public class Teacher extends PersistentObject {
     private Integer gender;
 
     private Date birthday;
+
+    @Column(name = "telephone_1")
+    private Long telephone1;
 
     public String getName() {
         return name;
@@ -39,5 +43,13 @@ public class Teacher extends PersistentObject {
 
     public void setBirthday(Date birthday) {
         this.birthday = birthday;
+    }
+
+    public Long getTelephone1() {
+        return telephone1;
+    }
+
+    public void setTelephone1(Long telephone1) {
+        this.telephone1 = telephone1;
     }
 }
