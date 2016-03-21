@@ -25,6 +25,7 @@
         <module>spring-redis</module>
         <module>clojure</module>
         <module>groovy-actor</module>
+        <module>solr</module>
     </modules>
 
 

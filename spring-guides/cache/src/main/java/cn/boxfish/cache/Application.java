@@ -42,6 +42,7 @@ public class Application {
 
         @Override
         public void run(String... args) throws Exception {
+
             // 查看是否每次都到数据库查询
             log.info(".... Fetching books");
 
