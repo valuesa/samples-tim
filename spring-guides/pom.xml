@@ -56,6 +56,10 @@
         <module>reback-resource</module>
         <module>system-service</module>
         <module>dto-demo</module>
+        <module>multiconfig</module>
+        <module>rabbitmq-sample1</module>
+        <module>multipart-upload</module>
+        <module>retry</module>
     </modules>
 
 

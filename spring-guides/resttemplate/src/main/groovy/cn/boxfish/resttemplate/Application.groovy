@@ -1,15 +1,20 @@
 package cn.boxfish.resttemplate
 
+import com.boxfishedu.beans.view.JsonResultModel
 import groovy.util.logging.Slf4j
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.client.RestTemplate
+
 /**
  * Created by LuoLiBing on 15/9/30.
  */
 @SpringBootApplication
 @Slf4j
+@RestController
 class Application implements CommandLineRunner {
 
 
@@ -51,11 +56,26 @@ class Application implements CommandLineRunner {
         def html = template.getForEntity("https://www.baidu.com/s?wd=NBA", String.class)
         println html.body*/
 
-
-        RestTemplate template = new RestTemplate()
         //template.setErrorHandler(new MyCustomException())
-        HashMap map = template.getForObject("http://localhost:8080/check1?email=aaaa...aa", paramObj, HashMap.class)
-        println map
+
+        /*RestTemplate restTemplate = new RestTemplate();
+
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+        requestFactory.setConnectTimeout(60000);
+        requestFactory.setReadTimeout(60000);
+
+        restTemplate.setRequestFactory(requestFactory);
+
+        def exchange = restTemplate.exchange("http://localhost:8080/upload", HttpMethod.PATCH, new HttpEntity<>(), String.class)
+        println  exchange.getBody()*/
+
+        /*JsonResultModel jsonResultModel = new RestTemplate().getForObject("http://localhost:8070/order/page?page=0&size=20", JsonResultModel.class)
+        println jsonResultModel*/
+    }
+
+    @RequestMapping(value = "/page")
+    public Object page() {
+        new RestTemplate().getForObject("http://192.168.66.176:8088/teacher/page/1?page=0&size=20", JsonResultModel.class)
     }
 
 }

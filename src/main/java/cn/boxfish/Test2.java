@@ -9,10 +9,10 @@ import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.concurrent.LinkedTransferQueue;
 import java.util.concurrent.TransferQueue;
 import java.util.regex.Matcher;
@@ -206,6 +206,13 @@ public class Test2 {
 
     }
 
+    @Test
+    public void localDate() throws ParseException {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        final Date parse = df.parse("2016-04-01");
+
+        System.out.println(parse.getTime());
+    }
 
     @Test
     public void readJson() throws IOException {
@@ -217,6 +224,37 @@ public class Test2 {
     @Test
     public void system() {
         System.out.println(System.getProperties());
+    }
+
+    // 获得本月第一天0点时间
+    public static Date getTimesMonthmorning() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMinimum(Calendar.DAY_OF_MONTH));
+        return cal.getTime();
+    }
+
+    // 获得本月最后一天24点时间
+    public static Date getTimesMonthnight() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(cal.get(Calendar.YEAR), cal.get(Calendar.MONDAY), cal.get(Calendar.DAY_OF_MONTH), 0, 0, 0);
+        cal.set(Calendar.DAY_OF_MONTH, cal.getActualMaximum(Calendar.DAY_OF_MONTH));
+        cal.set(Calendar.HOUR_OF_DAY, 24);
+        return cal.getTime();
+    }
+
+    @Test
+    public void date1() {
+        final Date date = new Date(1388505600000L);
+        System.out.println(date);
+
+//        for(long time = 1388505600000L; time <= 1483200000000L; time += 86400000 ) {
+//            System.out.println(time + "=" + new Date(time));
+//        }
+
+        System.out.println(1388505600000L + 86400000L * 365L*2L);
+        final Date date1 = new Date(1483200000000L);
+        System.out.println(date1);
     }
 
 }

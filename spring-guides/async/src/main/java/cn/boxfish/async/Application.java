@@ -30,10 +30,11 @@ public class Application implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         long start = System.currentTimeMillis();
+        // 异步Future
         Future<User> user1 = gitLookupService.findUser("luolibing");
         Future<User> user2 = gitLookupService.findUser("jiangtengfei");
         Future<User> user3 = gitLookupService.findUser("lizhengxing");
-
+        // 阻塞等待处理完毕再进行下一个操作
         while (!user1.isDone() && !user2.isDone() && !user3.isDone()) {
             Thread.sleep(10);
         }

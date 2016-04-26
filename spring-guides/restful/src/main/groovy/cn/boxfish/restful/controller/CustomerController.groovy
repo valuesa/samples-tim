@@ -9,12 +9,12 @@ import javax.servlet.http.HttpServletRequest
 @RestController
 class CustomerController extends BaseController {
 
-    @RequestMapping(method = RequestMethod.GET)
+    /*@RequestMapping(method = RequestMethod.GET)
     public @ResponseBody String index() {
         return "success";
-    }
+    }*/
 
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
+    @RequestMapping(value = "/upload", method = RequestMethod.PATCH)
     public String upload(String base, HttpServletRequest request) {
         def map = request.getParameterMap()
         println map
@@ -23,7 +23,10 @@ class CustomerController extends BaseController {
     }
 
     @RequestMapping(value = "/get/{username}", method = RequestMethod.GET)
-    public String get(@PathVariable String username) {
-        username
+    public Object get(@PathVariable String username) {
+        //Collections.singletonMap("key", username)
+        def map = new HashMap()
+        map.put("key", username)
+        map
     }
 }

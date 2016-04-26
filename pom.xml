@@ -13,8 +13,11 @@
         <module>spring-guides</module>
         <module>spring-boot-sample</module>
         <module>spring-cloud</module>
+        <module>middleware</module>
+        <module>design-patterns</module>
 
     </modules>
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -29,6 +32,7 @@
     </dependencies>
 
     <properties>
+        <profiles.active>development</profiles.active>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>

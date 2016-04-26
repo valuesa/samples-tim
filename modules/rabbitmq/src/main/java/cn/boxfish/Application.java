@@ -5,6 +5,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -22,5 +23,6 @@ public class Application implements CommandLineRunner {
         runner.run();*/
         Runner runner = new Runner();
         runner.run();
+        Collections.emptySet();
     }
 }

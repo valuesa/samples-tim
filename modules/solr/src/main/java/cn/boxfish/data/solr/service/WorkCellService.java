@@ -34,7 +34,7 @@ public class WorkCellService {
     }
 
     public List<WorkCell> findByNameStartWith(String name) {
-        return workCellSolrRepository.findByNameStartingWith(name);
+        return workCellSolrRepository.findByContentStartingWith(name);
     }
 
     private void saveSolrPage(Page<cn.boxfish.data.solr.entity.jpa.WorkCell> workCells) {

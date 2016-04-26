@@ -9,5 +9,5 @@ import java.util.List;
  */
 public interface WorkCellSolrRepository extends SolrCrudRepository<WorkCell, Long> {
 
-    List<WorkCell> findByNameStartingWith(String name);
+    List<WorkCell> findByContentStartingWith(String name);
 }

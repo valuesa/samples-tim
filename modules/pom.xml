@@ -26,6 +26,7 @@
         <module>clojure</module>
         <module>groovy-actor</module>
         <module>solr</module>
+        <module>enumsample</module>
     </modules>
 
 

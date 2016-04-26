@@ -21,7 +21,7 @@ class GreetingController {
     @RequestMapping("/greeting")
     @JsonIgnoreProperties(ignoreUnknown = true, value = "content")
     public Greeting greeting(@RequestParam(value = "name", defaultValue = "world") String name) {
-        return new Greeting(counter.incrementAndGet(),
+        return new Greeting(12,
                 String.format(template, name));
     }
 
