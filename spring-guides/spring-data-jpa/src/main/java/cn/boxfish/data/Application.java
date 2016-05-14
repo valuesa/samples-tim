@@ -7,10 +7,14 @@ import cn.boxfish.data.entity.jpa.impl.TagJpaServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.Filter;
 
 
 @SpringBootApplication
@@ -43,5 +47,10 @@ public class Application {
         // 11970
         schoolService.save(11970l);
         return "";
+    }
+
+    @Bean
+    public Filter openEntityManagerInViewFilter() {
+        return new OpenEntityManagerInViewFilter();
     }
 }

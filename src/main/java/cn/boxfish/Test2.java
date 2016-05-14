@@ -12,6 +12,9 @@ import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.LinkedTransferQueue;
 import java.util.concurrent.TransferQueue;
@@ -244,7 +247,7 @@ public class Test2 {
     }
 
     @Test
-    public void date1() {
+    public void date1() throws ParseException {
         final Date date = new Date(1388505600000L);
         System.out.println(date);
 
@@ -255,6 +258,21 @@ public class Test2 {
         System.out.println(1388505600000L + 86400000L * 365L*2L);
         final Date date1 = new Date(1483200000000L);
         System.out.println(date1);
+
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-09").getTime());
+    }
+
+    @Test
+    public void localDate1() {
+        LocalDateTime startDate = LocalDateTime.ofInstant(new Date().toInstant(), ZoneId.systemDefault());
+        LocalDateTime localDateTime = startDate.plusDays(2L);
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        for(int i=0; i<7; i++) {
+            localDateTime = localDateTime.plusDays(1);
+            System.out.println(dateTimeFormatter.format(localDateTime));
+            System.out.println(localDateTime.getDayOfWeek().getValue());
+        }
     }
 
 }

@@ -25,7 +25,13 @@ public class Application {
 
     @RequestMapping(value = "/index")
     public String retry() throws RemoteAccessException {
-        retryService.call1();
+        retryService.call1("aaaa");
+        return "success";
+    }
+
+    @RequestMapping(value = "/index1")
+    public String retry1() throws RemoteAccessException {
+        retryService.call2("aaaa");
         return "success";
     }
 }

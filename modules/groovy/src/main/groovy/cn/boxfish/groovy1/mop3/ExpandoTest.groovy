@@ -34,4 +34,12 @@ class ExpandoTest {
 
         carA.drive()
     }
+
+    @Test
+    void test2() {
+        Map<String, String> actors = [:] as Map<String, String>
+
+        actors.put(null, "111")
+
+    }
 }

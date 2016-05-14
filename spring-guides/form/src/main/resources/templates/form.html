@@ -3,6 +3,8 @@
       xmlns:th="http://www.thymeleaf.org">
 <body>
 <form action="#" th:action="@{/}" th:object="${person}" method="post">
+    <!-- 使用HiddenHttpMethodFilter在form里面添加一个hidden隐藏域,用来支持put delete等方式,name为_method -->
+    <input type="hidden" name="_method" th:value="put"/>
     <table>
         <tr>
             <td>Name:</td>

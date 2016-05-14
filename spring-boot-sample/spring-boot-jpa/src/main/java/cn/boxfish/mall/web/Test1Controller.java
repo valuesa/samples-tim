@@ -12,11 +12,16 @@ import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.Predicate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -42,6 +47,9 @@ public class Test1Controller {
 
     @Autowired
     Test1Service test1Service;
+
+    @Autowired
+    private EntityManager entityManager;
 
     @RequestMapping(value = "/service/{id}", method = RequestMethod.GET)
     public Service service(@PathVariable Long id) {
@@ -127,7 +135,7 @@ public class Test1Controller {
         serviceJpaRepository.findAll(predicate, pageable);
     }*/
 
-    @RequestMapping(value = "/services/query", method = RequestMethod.GET)
+    //@RequestMapping(value = "/services/query", method = RequestMethod.GET)
     public Object servicesQuery(Pageable pageable, ServiceSearchCriteria serviceSearchCriteria) {
         /*CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Service> criteria = builder.createQuery(Service.class);
@@ -152,6 +160,25 @@ public class Test1Controller {
          */
         //System.out.println(list);
         return null;
+    }
+
+    @RequestMapping(value = "/services/query", method = RequestMethod.GET)
+    public Object serviceQuery1(Pageable pageable, Service service) {
+
+        EntityQuery entityQuery = new EntityQuery<Service>(entityManager, pageable) {
+            @Override
+            public Predicate[] predicates() {
+                List<Predicate> predicateList = new ArrayList<>();
+                if(!StringUtils.isEmpty(service.getProductSkuName())) {
+                    predicateList.add(criteriaBuilder.like(root.get("productSkuName"), "测试%"));
+                }
+                //.... 多条件
+                return predicateList.toArray(new Predicate[predicateList.size()]);
+            }
+        };
+        Page page = entityQuery.page();
+        System.out.println(page.getTotalPages() + ":" + page.getTotalElements());
+        return page;
     }
 
     @RequestMapping(value = "/teacher/page/{roleId}")
