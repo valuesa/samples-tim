@@ -4,6 +4,7 @@ import cn.boxfish.validate.filter.CORSFilter;
 import cn.boxfish.validate.filter.UpgradeFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.embedded.FilterRegistrationBean;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -55,7 +56,7 @@ public class Application extends WebMvcConfigurerAdapter {
      * @return
      */
     @Bean
-    public Filter corsFilter() {
+    public Filter corsFilter1() {
         return new CORSFilter();
     }
 
@@ -76,6 +77,19 @@ public class Application extends WebMvcConfigurerAdapter {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/notfound").setViewName("forward: index.html");
+    }
+
+    /**
+     * 定义
+     * @return
+     */
+    @Bean
+    public FilterRegistrationBean corsFilter() {
+        FilterRegistrationBean corsFilterBean = new FilterRegistrationBean();
+        CORSFilter corsFilter = new CORSFilter();
+        corsFilterBean.setOrder(1);
+        corsFilterBean.setFilter(corsFilter);
+        return corsFilterBean;
     }
 
 }

@@ -1,10 +1,10 @@
-package cn.boxfish.reback;
+package cn.boxfish.repeat;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * Created by LuoLiBing on 16/3/14.
+ * Created by LuoLiBing on 16/5/26.
  */
 @SpringBootApplication
 public class Application {

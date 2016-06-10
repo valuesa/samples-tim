@@ -251,6 +251,8 @@ public class Test2 {
         final Date date = new Date(1388505600000L);
         System.out.println(date);
 
+        System.out.println(new Date().getTime());
+
 //        for(long time = 1388505600000L; time <= 1483200000000L; time += 86400000 ) {
 //            System.out.println(time + "=" + new Date(time));
 //        }
@@ -259,7 +261,9 @@ public class Test2 {
         final Date date1 = new Date(1483200000000L);
         System.out.println(date1);
 
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd").parse("2017-05-09").getTime());
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd").parse("2017-06-01").getTime());
+
+        System.out.println(1465374002186L-(1465374002186L%86400000)-8*3600*1000);
     }
 
     @Test
@@ -273,6 +277,22 @@ public class Test2 {
             System.out.println(dateTimeFormatter.format(localDateTime));
             System.out.println(localDateTime.getDayOfWeek().getValue());
         }
+    }
+
+    @Test
+    public void now() {
+        Calendar instance = Calendar.getInstance();
+        instance.set(Calendar.HOUR, 0);
+        instance.set(Calendar.MINUTE, 0);
+        instance.set(Calendar.SECOND, 0);
+        instance.set(Calendar.MILLISECOND, 0);
+        Date start = instance.getTime();
+        System.out.println(start.getTime());
+    }
+
+
+    @Test
+    public void md5() {
     }
 
 }

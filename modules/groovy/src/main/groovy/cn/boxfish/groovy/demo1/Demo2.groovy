@@ -1,7 +1,5 @@
 package cn.boxfish.groovy.demo1
-
 import org.junit.Test
-
 /**
  * Created by TIM on 2015/7/16.
  */

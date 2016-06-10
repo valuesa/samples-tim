@@ -16,11 +16,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by LuoLiBing on 15/9/30.
@@ -77,7 +77,12 @@ public class Application {
         // 普通的ConcurrentMapCache
         //return new ConcurrentMapCacheManager("books", "categorys");
         // 默认会注入StringRedisTemplate，只能保存String，如果换成其他对象无法保存到内存当中
-        return new RedisCacheManager(redisTemplate());
+        RedisCacheManager redisCacheManager = new RedisCacheManager(redisTemplate());
+        Map<String, Long> expires = new HashMap<>();
+        expires.put("books", 1000L * 60);
+        expires.put("categorys", 1000L * 60 * 10);
+        redisCacheManager.setExpires(expires);
+        return redisCacheManager;
     }
 
 
@@ -92,9 +97,9 @@ public class Application {
         RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(jedisConnectionFactory);
         // key的序列化
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
+        //redisTemplate.setKeySerializer(new StringRedisSerializer());
         // value的序列化
-        redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(Object.class));
+        //redisTemplate.setValueSerializer(new Jackson2JsonRedisSerializer<>(Object.class));
         return redisTemplate;
     }
 

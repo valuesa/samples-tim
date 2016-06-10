@@ -1,8 +1,11 @@
-spring.profiles.active=development
 
 ### 公共的配置信息
 server:
   port: 8080
+
+spring:
+  profiles:
+    active: development
 ---
 ### 测试环境,提交给测试组测试的环境
 spring:
@@ -11,6 +14,12 @@ spring:
 ### 本地开发使用的而环境,100
 spring:
   profiles: development
+
+my:
+  tests:
+    - a
+    - b
+
 ---
 spring:
   profiles: product

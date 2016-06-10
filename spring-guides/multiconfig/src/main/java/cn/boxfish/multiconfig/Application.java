@@ -1,5 +1,6 @@
 package cn.boxfish.multiconfig;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -24,9 +25,12 @@ public class Application implements CommandLineRunner {
         SpringApplication.run(Application.class, args);
     }
 
+    @Autowired
+    private Config config;
+
     @Override
     public void run(String... args) throws Exception {
-
+        System.out.println(config.getTests());
     }
 
     @RequestMapping(value = "/index")

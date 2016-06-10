@@ -27,6 +27,8 @@
         <module>groovy-actor</module>
         <module>solr</module>
         <module>enumsample</module>
+        <module>spring4</module>
+        <module>i18</module>
     </modules>
 
 

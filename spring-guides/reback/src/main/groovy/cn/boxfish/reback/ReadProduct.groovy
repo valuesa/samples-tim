@@ -8,13 +8,14 @@ import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.StandardCopyOption
-
 /**
  * Created by LuoLiBing on 16/3/14.
  */
 class ReadProduct {
 
-    final static String parent = "/share/resource"
+    final static String parent = "/share/resource_reback"
+
+    final static String source = "/share/resource_reback"
 
     final static String basesource = "/share/jackrabbiterror/jackrabbit0/repository/datastore"
 
@@ -228,14 +229,35 @@ class ReadProduct {
         }
     }
 
+    public static void copyFile() {
+        Paths.get("/Users/boxfish/Downloads/rms_checkmd5.log.new.new").toFile().eachLine { line ->
+            def array = line.split("=")
+            if(array.length != 2) {
+
+            } else {
+                def md5 = array[0].trim()
+                def path = array[1].trim()
+                def sourceFile = Paths.get(source, md5[0..1], md5[2], md5)
+                if(Files.exists(sourceFile)) {
+
+                    def target = Paths.get(parent, path)
+                    if (Files.notExists(target.parent)) {
+                        target.parent.toFile().mkdirs()
+                    }
+                    Files.copy(sourceFile, target, StandardCopyOption.REPLACE_EXISTING)
+                }
+            }
+        }
+    }
+
     public static void main(String[] args) {
         //new ReadProduct().copy(Paths.get("/share/jackrabbiterror/jackrabbit0/repository/datastore/00/00/62/000062a2842a09a3f9005fc1b9fa5637086e4966"))
         // new ReadProduct().transfer()
         // new ReadProduct().imageMd5(Paths.get("/share/target/image"))
         // new ReadProduct().transferImage1(Paths.get("/Users/boxfish/Desktop/image/target52"))
         // new ReadProduct().transferImage22(Paths.get("/Users/boxfish/Desktop/image/3"))
-
-        new ReadProduct().renameImage(Paths.get("/Users/boxfish/Desktop/image/target52"))
-
+//        new ReadProduct().transfer()
+//        new ReadProduct().renameImage(Paths.get("/Users/boxfish/Desktop/image/target52"))
+        copyFile()
     }
 }

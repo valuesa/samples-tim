@@ -60,6 +60,7 @@
         <module>rabbitmq-sample1</module>
         <module>multipart-upload</module>
         <module>retry</module>
+        <module>repeat-submit</module>
     </modules>
 
 
