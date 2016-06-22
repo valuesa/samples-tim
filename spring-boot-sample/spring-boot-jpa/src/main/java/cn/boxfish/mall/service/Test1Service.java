@@ -5,6 +5,8 @@ import cn.boxfish.mall.entity.jpa.TeacherJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by LuoLiBing on 16/3/17.
  */
@@ -26,5 +28,9 @@ public class Test1Service {
         final Teacher teacher1 = teacherJpaRepository.save(teacher);
         // 加事务变成持久态
         teacher1.setName("李振强");
+    }
+
+    public List<Teacher> findTeacher() {
+        return teacherJpaRepository.findByName("罗立兵1111");
     }
 }

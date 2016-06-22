@@ -1,12 +1,15 @@
 package cn.boxfish.spring4;
 
+import cn.boxfish.spring4.custom.LifecycleProcessorTest;
 import cn.boxfish.spring4.ioc722.ClientService;
 import cn.boxfish.spring4.ioc722.CommandManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.LifecycleProcessor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.DefaultLifecycleProcessor;
 import org.springframework.web.client.RestTemplate;
 
 import javax.inject.Inject;
@@ -41,15 +44,29 @@ public class Application implements CommandLineRunner {
 
     private CommandManager commandManager;
 
+    @Autowired
+    private LifecycleProcessorTest lifecycleProcessorTest;
+
     @Inject
     public void setCommandManager(Provider<CommandManager> provider) {
         this.commandManager = provider.get();
         commandManager.process("start");
     }
 
+    @Bean
+    public LifecycleProcessor lifecycleProcessor() {
+        DefaultLifecycleProcessor lifecycleProcessor = new DefaultLifecycleProcessor();
+        lifecycleProcessor.setTimeoutPerShutdownPhase(1000 * 10L);
+        return lifecycleProcessor;
+    }
+
     @Override
     public void run(String... args) throws Exception {
         commandManager.process("start");
+//        LifecycleProcessor lifecycleProcessor = lifecycleProcessor();
+//        lifecycleProcessor.stop();
+//        lifecycleProcessor.
+        //lifecycleProcessorTest.start();
         // clientService.execute();
     }
 }

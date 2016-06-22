@@ -21,4 +21,12 @@ public class ExampleBean {
         this.years = years;
         this.ultimateAnswer = ultimateAnswer;
     }
+
+    public String getUltimateAnswer() {
+        return ultimateAnswer;
+    }
+
+    public int getYears() {
+        return years;
+    }
 }

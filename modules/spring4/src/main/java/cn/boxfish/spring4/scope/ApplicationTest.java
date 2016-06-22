@@ -1,6 +1,5 @@
 package cn.boxfish.spring4.scope;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
@@ -11,8 +10,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class ApplicationTest {
 
     public static void main(String[] args) {
-        ApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"scope.xml"});
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(new String[]{"scope.xml"});
         final Object foo = context.getBean("foo");
-        System.out.println(foo);
+        context.registerShutdownHook();
     }
 }

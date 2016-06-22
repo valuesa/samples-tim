@@ -1,12 +1,7 @@
 package cn.boxfish.groovy1.gdk
-
-import groovy.sql.DataSet
-import groovy.sql.GroovyRowResult
 import groovy.sql.Sql
 import groovy.xml.MarkupBuilder
-import org.junit.Before
 import org.junit.Test
-
 /**
  * Created by TIM on 2015/9/18.
  */
@@ -14,10 +9,10 @@ class MySQLTest {
 
     private Sql sql;
 
-    @Before
-    void connectTest() {
-        sql = Sql.newInstance("jdbc:mysql://localhost:3306/benyoyo", 'root', 'root', 'com.mysql.jdbc.Driver')
-    }
+//    @Before
+//    void connectTest() {
+//        sql = Sql.newInstance("jdbc:mysql://localhost:3306/benyoyo", 'root', 'root', 'com.mysql.jdbc.Driver')
+//    }
 
     @Test
     void categoryTest() {
@@ -72,5 +67,11 @@ class MySQLTest {
         interested.each {
             println it.id
         }
+    }
+
+    @Test
+    void check() {
+        String name = null
+        println name?.substring(0,1) == null ? "没有": "有"
     }
 }

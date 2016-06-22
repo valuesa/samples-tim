@@ -29,6 +29,9 @@
         <module>enumsample</module>
         <module>spring4</module>
         <module>i18</module>
+        <module>shell</module>
+        <module>mongo-simple</module>
+        <module>bebase-helper</module>
     </modules>
 
 

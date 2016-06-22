@@ -1,10 +1,10 @@
 package cn.boxfish.resttemplate
-
-import com.boxfishedu.beans.view.JsonResultModel
 import groovy.util.logging.Slf4j
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.util.LinkedMultiValueMap
+import org.springframework.util.MultiValueMap
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.client.RestTemplate
@@ -30,6 +30,16 @@ class Application implements CommandLineRunner {
      */
     @Override
     void run(String... args) throws Exception {
+
+        /**
+         * 表单提交,post请求
+         */
+        final MultiValueMap<String, String> formVars = new LinkedMultiValueMap<>();
+        formVars.add( "username", "matt" );
+        formVars.add( "product", "awesome" );
+        formVars.add("password", "122324")
+        new RestTemplate().postForObject("http://192.168.77.178:3200/teaching/signup", formVars, Object.class)
+
         /*RestTemplate restTemplate = new RestTemplate()
         // 异常处理
         restTemplate.setErrorHandler(new MyCustomException())
@@ -75,7 +85,8 @@ class Application implements CommandLineRunner {
 
     @RequestMapping(value = "/page")
     public Object page() {
-        new RestTemplate().getForObject("http://192.168.66.176:8088/teacher/page/1?page=0&size=20", JsonResultModel.class)
+
+        //new RestTemplate().getForObject("http://192.168.66.176:8088/teacher/page/1?page=0&size=20", JsonResultModel.class)
     }
 
 }

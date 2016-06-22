@@ -261,7 +261,7 @@ public class Test2 {
         final Date date1 = new Date(1483200000000L);
         System.out.println(date1);
 
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd").parse("2017-06-01").getTime());
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd").parse("2016-06-18").getTime());
 
         System.out.println(1465374002186L-(1465374002186L%86400000)-8*3600*1000);
     }

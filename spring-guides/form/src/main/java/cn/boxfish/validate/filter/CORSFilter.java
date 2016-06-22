@@ -1,5 +1,6 @@
 package cn.boxfish.validate.filter;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -11,6 +12,7 @@ import java.io.IOException;
 /**
  * Created by LuoLiBing on 16/4/27.
  */
+@Profile(value = "admin")
 public class CORSFilter extends OncePerRequestFilter {
 
     public static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";
