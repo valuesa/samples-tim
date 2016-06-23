@@ -2,13 +2,17 @@ package cn.boxfish;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
+import org.springframework.util.DigestUtils;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
+import java.net.MalformedURLException;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -292,7 +296,18 @@ public class Test2 {
 
 
     @Test
-    public void md5() {
+    public void md5() throws IOException {
+        InputStream inputStream = Files.newInputStream(Paths.get("/Users/boxfish/Downloads/001.How to become the coolest guy at school%3F.jpg"));
+        System.out.println(DigestUtils.md5DigestAsHex(inputStream));
+        inputStream.close();
+    }
+
+
+    @Test
+    public void rmiTest() throws RemoteException, NotBoundException, MalformedURLException {
+        // 返回的是Stub对象,stub对象会被序列化传递过来然后进行反序列化
+        MyService myService = (MyService) Naming.lookup("rmi://127.0.0.1/RemoteHello");
+        System.out.println(myService.sayHello("luolibing"));
     }
 
 }
