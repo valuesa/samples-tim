@@ -17,6 +17,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -265,9 +266,10 @@ public class Test2 {
         final Date date1 = new Date(1483200000000L);
         System.out.println(date1);
 
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd").parse("2016-06-18").getTime());
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd").parse("2016-07-30").getTime());
 
         System.out.println(1465374002186L-(1465374002186L%86400000)-8*3600*1000);
+        System.out.println((Long)null);
     }
 
     @Test
@@ -310,4 +312,10 @@ public class Test2 {
         System.out.println(myService.sayHello("luolibing"));
     }
 
+    @Test
+    public void localDate11() {
+        YearMonth yearMonth = YearMonth.of(2016, 10);
+        System.out.println(yearMonth.atDay(1));
+        System.out.println(yearMonth.atEndOfMonth());
+    }
 }

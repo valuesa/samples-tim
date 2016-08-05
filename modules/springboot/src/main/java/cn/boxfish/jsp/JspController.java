@@ -1,6 +1,5 @@
 package cn.boxfish.jsp;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -17,7 +16,6 @@ public class JspController {
         return "index";
     }
 
-    @Value("${data}")
     String data;
 
 }

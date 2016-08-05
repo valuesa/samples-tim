@@ -32,6 +32,9 @@
         <module>shell</module>
         <module>mongo-simple</module>
         <module>bebase-helper</module>
+        <module>java8</module>
+        <module>jdk</module>
+        <module>http</module>
     </modules>
 
 

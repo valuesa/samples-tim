@@ -22,7 +22,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by LuoLiBing on 16/3/4.
@@ -65,7 +64,7 @@ public class Test1Controller {
     public Service serviceSave() {
 
         Service service = new Service();
-        service.setProductSkuName("测试" + new Random().nextInt(100));
+        //service.setProductSkuName("测试" + new Random().nextInt(100));
         final WorkOrder workOrder = new WorkOrder();
         workOrder.setStatus("服务完成");
         service.addWorkOrder(workOrder);

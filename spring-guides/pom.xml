@@ -61,6 +61,8 @@
         <module>multipart-upload</module>
         <module>retry</module>
         <module>repeat-submit</module>
+        <module>quartz-database</module>
+        <module>liquibase</module>
     </modules>
 
 

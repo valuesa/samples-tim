@@ -1,3 +1,4 @@
+import cn.boxfish.config.TestProperties;
 import cn.boxfish.multipart.datasource.ConfigTest;
 import cn.boxfish.multipart.datasource.DBUtils;
 import cn.boxfish.multipart.datasource.Rule;
@@ -35,6 +36,7 @@ public class Application extends SpringBootServletInitializer  {
 
     @RequestMapping(value = "/sayHi", method = RequestMethod.GET)
     public @ResponseBody String sayHi() {
+        System.out.println(testProperties);
         return rule.getUser() + ":" + rule.getPass();
     }
 
@@ -46,6 +48,9 @@ public class Application extends SpringBootServletInitializer  {
 
     @Autowired
     private ConfigTest configTest;
+
+    @Autowired
+    private TestProperties testProperties;
 
     @Autowired
     private Rule rule;
