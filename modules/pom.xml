@@ -37,6 +37,7 @@
         <module>http</module>
         <module>phonenumber</module>
         <module>servlet</module>
+        <module>counter</module>
     </modules>
 
 
