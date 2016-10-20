@@ -194,6 +194,44 @@ public class StreamAPI {
                 .limit(20)
                 .toArray();
         Stream.of(result).forEach(System.out::println);
+        List<Person> persons = new ArrayList<>();
+        persons.add(new Person(1, "luolibing"));
+        persons.add(new Person(2, "liuxiaoling"));
+        persons.add(new Person(3, "luominghao"));
+        persons.stream().peek( p -> p.name = p.name + "11");
+        persons.forEach(System.out::println);
+    }
+
+    class Person {
+        private int id;
+        private String name;
+        public Person(int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return "Person{" +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    '}';
+        }
     }
 
     /**
@@ -535,11 +573,11 @@ public class StreamAPI {
         );
     }
 
-    class Person {
+    class Persons {
         Integer id;
         String name;
 
-        public Person(Integer id, String name) {
+        public Persons(Integer id, String name) {
             this.id = id;
             this.name = name;
         }
@@ -804,5 +842,4 @@ public class StreamAPI {
             return i + 1;}).toArray();
         System.out.println(array);
     }
-
 }

@@ -40,6 +40,12 @@ public class HttpRequestSupport {
             String key = attributeNames.nextElement();
             System.out.println(String.join("&", key + "=" + Objects.toString(request.getParameter(key))));
         }
+
+        // 来源相关
+        System.out.println("remoteUser= " + request.getRemoteUser());
+        System.out.println("remoteHost= " + request.getRemoteHost());
+        System.out.println("remoteAddr= " + request.getRemoteAddr());
+        System.out.println("locale= " + request.getLocale());
     }
 
     public static <T> void parseResponse(String url, HttpMethod httpMethod, Class<T> clazz) {

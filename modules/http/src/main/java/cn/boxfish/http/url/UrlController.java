@@ -63,7 +63,7 @@ public class UrlController {
      * @param request
      * @return
      */
-    @RequestMapping(value = "http", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(value = "/http", method = {RequestMethod.GET, RequestMethod.POST})
     public Object http(HttpServletRequest request) {
         HttpRequestSupport.parseRequest(request);
         return ResponseEntity.ok().build();

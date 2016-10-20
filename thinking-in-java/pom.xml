@@ -11,10 +11,18 @@
 
     <artifactId>thinking-in-java</artifactId>
 
+    <!--<properties>-->
+        <!--<java.version>1.7</java.version>-->
+    <!--</properties>-->
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>19.0</version>
         </dependency>
     </dependencies>
 </project>

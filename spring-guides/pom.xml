@@ -63,6 +63,7 @@
         <module>repeat-submit</module>
         <module>quartz-database</module>
         <module>liquibase</module>
+        <module>mail</module>
     </modules>
 
 

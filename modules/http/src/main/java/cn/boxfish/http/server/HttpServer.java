@@ -54,6 +54,7 @@ public class HttpServer {
      */
     @RequestMapping(value = "cookie", method = RequestMethod.GET)
     public Object cookie(HttpServletRequest request, HttpServletResponse response) {
+        System.out.println(request.getRequestURI());
         HttpRequestSupport.parseRequest(request);
         response.addCookie(new Cookie("name", "luolibing"));
         return ResponseEntity.ok().build();

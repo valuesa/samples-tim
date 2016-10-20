@@ -35,6 +35,8 @@
         <module>java8</module>
         <module>jdk</module>
         <module>http</module>
+        <module>phonenumber</module>
+        <module>servlet</module>
     </modules>
 
 

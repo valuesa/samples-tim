@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * Created by LuoLiBing on 16/4/27.
  */
-@Profile(value = "admin")
+@Profile(value = "product") // 指定当product配置时生效.
 public class CORSFilter extends OncePerRequestFilter {
 
     public static final String ACCESS_CONTROL_ALLOW_ORIGIN = "Access-Control-Allow-Origin";

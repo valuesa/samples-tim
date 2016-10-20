@@ -84,7 +84,10 @@ public class FunctionLambdaDrive extends Application implements Exercise {
 
     @Test
     public void test2() {
-        withLock(new ReentrantLock(), () -> System.out.println("aaaa"));
+        withLock(new ReentrantLock(), () -> {
+            System.out.println("aaaa");
+            throw new RuntimeException("测试错误");
+        });
     }
 
     public static void withLock(ReentrantLock reentrantLock, Runnable action) {
@@ -393,6 +396,7 @@ public class FunctionLambdaDrive extends Application implements Exercise {
             return mapper.apply(one, two);
         }
     }
+
 }
 
 class Person {

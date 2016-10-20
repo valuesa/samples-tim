@@ -490,5 +490,13 @@ public class FunctionLambda extends Application implements Exercise {
             dest.set(i,src.get(i));
     }
 
+    @Test
+    public void testFinal() {
+        final int[] index = {0};
+        IntStream.range(0, 100).forEach( i -> {
+            index[0] ++;
+        });
+        System.out.println(index[0]);
+    }
     
 }

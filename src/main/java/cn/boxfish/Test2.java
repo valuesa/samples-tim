@@ -266,7 +266,7 @@ public class Test2 {
         final Date date1 = new Date(1483200000000L);
         System.out.println(date1);
 
-        System.out.println(new SimpleDateFormat("yyyy-MM-dd").parse("2016-07-30").getTime());
+        System.out.println(new SimpleDateFormat("yyyy-MM-dd").parse("2016-10-01").getTime());
 
         System.out.println(1465374002186L-(1465374002186L%86400000)-8*3600*1000);
         System.out.println((Long)null);
@@ -317,5 +317,24 @@ public class Test2 {
         YearMonth yearMonth = YearMonth.of(2016, 10);
         System.out.println(yearMonth.atDay(1));
         System.out.println(yearMonth.atEndOfMonth());
+    }
+
+    @Test
+    public void testS() {
+        System.out.println(1 >> 2);
+        System.out.println(1/2);
+        System.out.println(4 % 4);
+    }
+
+
+    @Test
+    public void testt() {
+        // -Durl=www.baidu.com
+        System.getProperty("url");
+        for(int i = 0; i < 4; i++) {
+            for(int j = 0; j<4; j++) {
+                System.out.println((j + 1) + i * 4);
+            }
+        }
     }
 }
