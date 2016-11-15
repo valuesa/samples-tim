@@ -17,4 +17,7 @@ public interface TeacherJpaRepository extends JpaRepository<Teacher, Long> {
     Page<Teacher> findTeacher1(Pageable pageable, Long roleId);
 
     List<Teacher> findByName(String name);
+
+    @Query(value = "select t from Teacher t where t.name is not null")
+    List<Teacher> findAllByNameNotNull();
 }

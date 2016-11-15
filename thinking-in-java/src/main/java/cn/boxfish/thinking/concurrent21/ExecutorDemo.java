@@ -53,6 +53,7 @@ public class ExecutorDemo {
      * shutdown和terminate
      * 关闭与停止,shutdown会标记线程池状态为关闭状态,这个时候不能再提交任务,并且会触发tryTerminate(),尝试中断,给每一个任务标记中断状态(等待任务找到合适的时机进行中断)
      * 当调用shutdown()之后,调用isShutdown()会返回true, 当完成中断之后isTerminate()会返回true,所以当调用shutdown之后,判断是否还有线程在执行可以通过isTerminate来进行判断
+     * shutdown会等待所有已经执行的任务执行完,不继续接收要执行的任务. shutdownNow()会通过中断的方式尝试结束正在执行的任务,未能响应中断的任务可能永远不会终止
      * @throws InterruptedException
      *
      * CachedThreadPool使用的是同步队列SynchronousQueue队列,这个线程池根据需要创建新的线程,如果有空闲线程则会重复使用,线程空闲60秒自动回收, 在创建线程池时就定义了最大空闲时间

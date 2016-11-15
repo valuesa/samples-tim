@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.File;
+import java.nio.file.Paths;
 
 /**
  * Created by LuoLiBing on 15/10/8.
@@ -33,5 +36,11 @@ public class ValidateController extends WebMvcConfigurerAdapter {
             return "form";
         }
         return "redirect:/results";
+    }
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public void staticResource(HttpServletRequest request) {
+        File file = Paths.get(request.getServletContext().getRealPath("index.html")).toFile();
+        System.out.println(file);
     }
 }

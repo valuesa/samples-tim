@@ -38,6 +38,8 @@
         <module>phonenumber</module>
         <module>servlet</module>
         <module>counter</module>
+        <module>excel-annotation</module>
+        <module>boxfish-security-api</module>
     </modules>
 
 

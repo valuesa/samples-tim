@@ -7,6 +7,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by LuoLiBing on 16/10/20.
@@ -15,6 +17,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *
  * }
  * 这也被称为同步控制块; 进入此段代码前,必须得到syncObject对象的锁,如果其他线程已经得到这个锁,那么就得等待锁被释放以后,才能进入临界区.同步控制块相对于整个方法同步,具有更高的性能.
+ *
  */
 public class SynchronizeDemo1 {
 
@@ -101,6 +104,24 @@ public class SynchronizeDemo1 {
                 p.incrementX();
                 p.incrementY();
                 temp = getPair();
+            }
+            store(temp);
+        }
+    }
+
+    // 显示临界区
+    static class PairManage3 extends PairManager {
+        private Lock lock = new ReentrantLock();
+        @Override
+        public void increment() {
+            Pair temp;
+            lock.lock();
+            try {
+                p.incrementX();
+                p.incrementY();
+                temp = getPair();
+            } finally {
+                lock.unlock();
             }
             store(temp);
         }

@@ -1,6 +1,7 @@
 package cn.boxfish.mail;
 
 import cn.boxfish.mail.entity.Teacher;
+import cn.boxfish.mail.entity.WorkOrder;
 import cn.boxfish.mail.service.Test1Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +38,10 @@ public class Application implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
         final List<Teacher> teachers = test1Service.findTeacher();
+        List<Teacher> list = test1Service.findByNameNotNull();
+        List<WorkOrder> list2 = test1Service.findByStatusNotNull();
+        System.out.println(list2);
+        System.out.println(list);
         System.out.println(teachers);
     }
 }

@@ -69,7 +69,11 @@ public class ExceptionThreadDemo {
     @Test
     public void test1() {
         ExecutorService exec = Executors.newCachedThreadPool(new HandlerThreadFactory());
-        exec.execute(new ExceptionThread2());
+        try {
+            exec.execute(new ExceptionThread2());
+        } catch (Exception e) {
+            System.out.println("caught " + e.getMessage());
+        }
     }
 
     @Test

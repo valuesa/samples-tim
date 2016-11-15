@@ -1,8 +1,11 @@
 package cn.boxfish.repeat.web;
 
 import cn.boxfish.repeat.entity.SubmitForm;
+import cn.boxfish.repeat.handler.TokenHandler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,6 +15,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -20,25 +24,35 @@ import java.util.Random;
 @Controller
 public class DuplicateFormSubmission {
 
+    @Autowired
+    private TokenHandler tokenHandler;
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String defaultView(HttpServletRequest request, Model model) {
         Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
         if(inputFlashMap != null) {
             model.addAttribute("formResults", inputFlashMap.get("submitForm"));
+        } else {
+            model.addAttribute("token", tokenHandler.generate());
         }
         return "index";
     }
 
     @RequestMapping(value = "/handle", method = RequestMethod.POST)
-    public RedirectView handlePost(HttpServletRequest request,
+    public Object handlePost(HttpServletRequest request,
                                    @ModelAttribute SubmitForm submitForm,
                                    RedirectAttributes redirectAttrs) {
+        if(StringUtils.isEmpty(submitForm.getToken())
+                || Objects.isNull(tokenHandler.get(submitForm.getToken()))) {
+            System.out.println("非法提交");
+            return new RedirectView("/403.html", true);
+        }
 
         Random random = new Random(10);
         submitForm.setConfirmationNumber(random.nextInt(10));
 
         redirectAttrs.addFlashAttribute(submitForm);
-
-        return new RedirectView("/", true);
+        tokenHandler.evict(submitForm.getToken());
+        return "index";
     }
 }

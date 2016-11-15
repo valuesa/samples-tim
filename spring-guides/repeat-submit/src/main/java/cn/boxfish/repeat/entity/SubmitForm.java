@@ -3,7 +3,7 @@ package cn.boxfish.repeat.entity;
 /**
  * Created by LuoLiBing on 16/5/26.
  */
-public class SubmitForm {
+public class SubmitForm extends BaseForm {
     private String name;
     private String emailAddress;
     private int confirmationNumber;

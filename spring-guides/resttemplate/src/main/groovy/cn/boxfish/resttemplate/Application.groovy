@@ -3,12 +3,11 @@ import groovy.util.logging.Slf4j
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.util.LinkedMultiValueMap
-import org.springframework.util.MultiValueMap
+import org.springframework.http.client.ClientHttpResponse
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.client.DefaultResponseErrorHandler
 import org.springframework.web.client.RestTemplate
-
 /**
  * Created by LuoLiBing on 15/9/30.
  */
@@ -34,12 +33,22 @@ class Application implements CommandLineRunner {
         /**
          * 表单提交,post请求
          */
-        final MultiValueMap<String, String> formVars = new LinkedMultiValueMap<>();
-        formVars.add( "username", "matt" );
-        formVars.add( "product", "awesome" );
-        formVars.add("password", "122324")
-        new RestTemplate().postForObject("http://192.168.77.178:3200/teaching/signup", formVars, Object.class)
+//        final MultiValueMap<String, String> formVars = new LinkedMultiValueMap<>();
+//        formVars.add( "username", "matt" );
+//        formVars.add( "product", "awesome" );
+//        formVars.add("password", "122324")
+//        new RestTemplate().postForObject("http://192.168.77.178:3200/teaching/signup", formVars, Object.class)
 
+        def template = new RestTemplate();
+        template.setErrorHandler(new DefaultResponseErrorHandler() {
+            @Override
+            void handleError(ClientHttpResponse response) throws IOException {
+                throw new RuntimeException(response.getBody().text)
+//                super.handleError(response)
+            }
+        })
+        def entity = template.getForEntity("http://base.boxfish.cn/boxfish-wudaokou-recommend/recommend/ultimate/2143183/2", Object.class);
+        println entity
         /*RestTemplate restTemplate = new RestTemplate()
         // 异常处理
         restTemplate.setErrorHandler(new MyCustomException())
@@ -83,9 +92,16 @@ class Application implements CommandLineRunner {
         println jsonResultModel*/
     }
 
+    def set = Collections.synchronizedSet(new HashSet())
+
     @RequestMapping(value = "/page")
     public Object page() {
-
+        def id = Thread.currentThread().id;
+        if(set.contains(id) != null) {
+            Runtime.getRuntime().exit(9)
+        } else {
+            set.add(id)
+        }
         //new RestTemplate().getForObject("http://192.168.66.176:8088/teacher/page/1?page=0&size=20", JsonResultModel.class)
     }
 

@@ -34,10 +34,12 @@ public class AccessTaskQueue implements Runnable {
     @Override
     public void run() {
         try {
-            Loger loger = queue.take();
-            list.add(loger);
-            if(list.size() >= THRESHOLD) {
-                saveAndClear();
+            while (!Thread.interrupted()) {
+                Loger loger = queue.take();
+                list.add(loger);
+                if (list.size() >= THRESHOLD) {
+                    saveAndClear();
+                }
             }
         } catch (InterruptedException e) {
             e.printStackTrace();

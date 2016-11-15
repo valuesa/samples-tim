@@ -1,5 +1,8 @@
 package cn.boxfish.thinking.concurrent21;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Spliterator;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.ForkJoinTask;
@@ -62,7 +65,7 @@ public class ForkJoinPoolDemo extends RecursiveTask<Integer> {
         return sum;
     }
 
-    public static void main(String[] args) {
+    public static void main1(String[] args) {
         long start = System.currentTimeMillis();
         ForkJoinPool pool = new ForkJoinPool();
         ForkJoinPoolDemo task = new ForkJoinPoolDemo(0, 10000000);
@@ -88,5 +91,39 @@ public class ForkJoinPoolDemo extends RecursiveTask<Integer> {
         }
         System.out.println(sum);
         System.out.println("time=" + (System.currentTimeMillis() - start));
+    }
+
+    public static void spliterator() throws InterruptedException {
+        ArrayList<Object> list = new ArrayList<>();
+        List<Spliterator<Object>> spliterators = new ArrayList<>();
+        for(int i = 0; i < 100; i ++) {
+            list.add(i);
+        }
+        Spliterator<Object> spliterator1 = list.spliterator();
+        System.out.println(" " +  spliterator1.characteristics());
+        System.out.println(" " + spliterator1.estimateSize());
+
+        System.out.println("after trySplit()");
+        Spliterator<Object> spliterator2 = spliterator1.trySplit();
+        System.out.println(" " + spliterator1.characteristics());
+        System.out.println(" " + spliterator1.estimateSize());
+        Spliterator<Object> spliterator1_1 = spliterator1.trySplit();
+        spliterators.add(spliterator1);
+        spliterators.add(spliterator1_1);
+        Spliterator<Object> spliterator2_2 = spliterator2.trySplit();
+        spliterators.add(spliterator2_2);
+        spliterators.add(spliterator2);
+
+        int i = 0;
+        for(Spliterator<Object> spliterator : spliterators) {
+            System.out.println("第" + (++i)+ "部分");
+            while (spliterator.tryAdvance(System.out::println)) ;
+            System.out.println();
+        }
+        Thread.sleep(10000);
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        spliterator();
     }
 }

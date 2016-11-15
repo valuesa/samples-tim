@@ -1,7 +1,10 @@
 package cn.boxfish.mail.service;
 
 import cn.boxfish.mail.entity.Teacher;
+import cn.boxfish.mail.entity.WorkOrder;
+import cn.boxfish.mail.entity.jpa.ServiceJpaRepository;
 import cn.boxfish.mail.entity.jpa.TeacherJpaRepository;
+import cn.boxfish.mail.entity.jpa.WorkOrderJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +20,13 @@ public class Test1Service {
     @Autowired
     private TeacherJpaRepository teacherJpaRepository;
 
+    @Autowired
+    private WorkOrderJpaRepository workOrderJpaRepository;
+
+    @Autowired
+    private
+    ServiceJpaRepository serviceJpaRepository;
+
     public Teacher findTeacher(Long id) {
         Teacher teacher = teacherJpaRepository.findOne(id);
         // 加事务变成持久态
@@ -28,6 +38,15 @@ public class Test1Service {
         final Teacher teacher1 = teacherJpaRepository.save(teacher);
         // 加事务变成持久态
         teacher1.setName("李振强");
+    }
+
+    public List<Teacher> findByNameNotNull() {
+        return teacherJpaRepository.findAllByNameNotNull();
+    }
+
+    public List<WorkOrder> findByStatusNotNull() {
+        cn.boxfish.mail.entity.Service service = serviceJpaRepository.findOne(5L);
+        return workOrderJpaRepository.findAllByServiceAndStatusNotNull(service);
     }
 
     public List<Teacher> findTeacher() {
