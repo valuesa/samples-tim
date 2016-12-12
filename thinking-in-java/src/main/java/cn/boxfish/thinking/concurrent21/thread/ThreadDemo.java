@@ -1,6 +1,5 @@
 package cn.boxfish.thinking.concurrent21.thread;
 
-import cn.boxfish.thinking.concurrent21.thread.RunnableDemo;
 import org.junit.Test;
 
 import java.util.Map;
@@ -114,7 +113,7 @@ public class ThreadDemo {
         System.out.println("Waiting for LiftOff");
     }
 
-    public static void main(String[] args) throws NoSuchFieldException {
+    public static void main3(String[] args) throws NoSuchFieldException {
 //        long offset = Unsafe.getUnsafe().objectFieldOffset(ThreadDemo.class.getDeclaredField("blocker"));
 //        System.out.println(offset);
         Thread th = Thread.currentThread();
@@ -210,6 +209,22 @@ public class ThreadDemo {
                     System.err.println("ThreadB interrupted");
                 }
             }
+        }
+    }
+
+    public static void main(String[] args) {
+        Thread th = new Thread(() -> {
+            System.out.println("startThread");
+            throw new RuntimeException("aaaa");
+        });
+        th.setUncaughtExceptionHandler((t, e) -> {
+            System.out.println("caught the exception = " + e.getMessage());
+            throw new RuntimeException(e);
+        });
+        try {
+            th.start();
+        } catch (Exception e) {
+            System.out.println("caught thread " + e.getMessage());
         }
     }
 }

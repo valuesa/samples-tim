@@ -842,4 +842,10 @@ public class StreamAPI {
             return i + 1;}).toArray();
         System.out.println(array);
     }
+
+    @Test
+    public void streamList() {
+        IntStream.range(0, 100).parallel().forEach(System.out::println);
+    }
+
 }

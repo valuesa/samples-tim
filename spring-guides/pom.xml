@@ -64,6 +64,7 @@
         <module>quartz-database</module>
         <module>liquibase</module>
         <module>mail</module>
+        <module>schedule</module>
     </modules>
 
 

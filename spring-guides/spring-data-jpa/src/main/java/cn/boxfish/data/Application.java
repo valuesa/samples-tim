@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.Filter;
 
 
+/**
+ * Jotm 多数据库事物
+ */
 @SpringBootApplication
 @RestController
 public class Application {

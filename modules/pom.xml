@@ -40,6 +40,7 @@
         <module>counter</module>
         <module>excel-annotation</module>
         <module>boxfish-security-api</module>
+        <module>vertx</module>
     </modules>
 
 
