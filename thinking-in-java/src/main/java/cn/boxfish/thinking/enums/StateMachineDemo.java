@@ -47,7 +47,7 @@ public class StateMachineDemo {
         static Random rand = new Random(47);
 
         public static Input randomSelection() {
-            return values()[rand.nextInt(values().length - 1)];
+            return values()[rand.nextInt(values().length - 2)];
         }
     }
 
@@ -101,7 +101,7 @@ public class StateMachineDemo {
         // 瞬时状态
         enum StateDuration { TRANSIENT }
 
-        // 状态枚举
+        // 状态枚举, 对于每种不同的输入都有对应的处理方式
         enum State {
             // 重置
             RESTING {
@@ -208,5 +208,31 @@ public class StateMachineDemo {
         }
 
 
+        static void run(Generator<Input> gen) {
+            while (state != State.TERMINAL) {
+                state.next(gen.next());
+                while (state.isTransient) {
+                    state.next();
+                }
+                state.output();
+            }
+        }
+
+        interface Generator<T> {
+            T next();
+        }
+
+        static class RandomInputGenerator implements Generator<Input> {
+
+            @Override
+            public Input next() {
+                return Input.randomSelection();
+            }
+        }
+
+        public static void main(String[] args) {
+            RandomInputGenerator generator = new RandomInputGenerator();
+            run(generator);
+        }
     }
 }

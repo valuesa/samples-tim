@@ -106,7 +106,7 @@ public class ResponsibilityChainDemo2 {
         boolean handle(Mail m);
     }
 
-    // 邮件发送
+    // 邮件发送, 下面的实现方式类似于命令设计模式
     static class PostOffice {
 
         static EnumMap<MailHandler, Command> em;

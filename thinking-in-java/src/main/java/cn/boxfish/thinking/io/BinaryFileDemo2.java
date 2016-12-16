@@ -22,4 +22,8 @@ public class BinaryFileDemo2 {
             }
         }
     }
+
+    public static void sayHello() {
+        System.out.println("Hello!!!");
+    }
 }
