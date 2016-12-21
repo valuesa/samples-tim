@@ -17,6 +17,7 @@ class CustomerController extends BaseController {
     @RequestMapping(value = "/upload", method = RequestMethod.PATCH)
     public String upload(String base, HttpServletRequest request) {
         def map = request.getParameterMap()
+        println "aaaa"
         println map
         println base
         return "aaaa"

@@ -41,6 +41,7 @@
         <module>excel-annotation</module>
         <module>boxfish-security-api</module>
         <module>vertx</module>
+        <module>osgi</module>
     </modules>
 
 

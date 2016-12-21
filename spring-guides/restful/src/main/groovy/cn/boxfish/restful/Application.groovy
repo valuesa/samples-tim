@@ -16,6 +16,7 @@ import javax.servlet.Filter
 class Application extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
+        println "aaaaaaaaaaaaaa"
         SpringApplication.run(Application.class, args)
         log.info "测试日志11111"
     }

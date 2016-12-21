@@ -1,5 +1,6 @@
 package cn.boxfish.jdbc;
 
+import com.mysql.jdbc.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.sql.PreparedStatement;
 
 
 /**
@@ -45,10 +51,24 @@ public class Application implements CommandLineRunner {
         SpringApplication.run(Application.class, args);
     }
 
+    @Transactional
     @RequestMapping(value = "/decrement", method = RequestMethod.POST)
     public Object decrement() {
-        int flag = jdbcTemplate.update("UPDATE customers SET score=(score-10) WHERE id=1 and (score-10)>60");
-        System.out.println("flag=" + flag);
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(
+                    "INSERT  INTO customers(first_name, last_name,score) VALUES (?,?,?)", Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, "luolibing");
+            ps.setString(2, "good like");
+            ps.setLong(3, 100);
+            return ps;
+        }, keyHolder);
+        System.out.println(keyHolder.getKey());
+
+
+
+//        int flag = jdbcTemplate.update("UPDATE customers SET score=(score-10) WHERE id=1 and (score-10)>60");
+//        System.out.println("flag=" + flag);
         return ResponseEntity.ok().build();
     }
 

@@ -3,6 +3,9 @@ package cn.boxfish.thinking.interfaces;
 /**
  * Created by LuoLiBing on 16/12/16.
  * 生成遵循某个接口的对象典型的方式就是工厂模式
+ *
+ * 确定接口是理想选择,因而应该总是选择接口而不是具体的类这是一种错误的想法 ,过早的优化设计.
+ * 恰当的原则应该是优先选择类而不是接口, 从类开始,如果接口的必需性变得非常明确,那么久进行重构. 接口是一种重要的工具,但是他们容易被滥用.
  */
 public class FactoryDemo {
 
