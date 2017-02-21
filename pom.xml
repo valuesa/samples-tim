@@ -16,7 +16,6 @@
         <module>middleware</module>
         <module>design-patterns</module>
         <module>thinking-in-java</module>
-
     </modules>
 
     <dependencies>
