@@ -38,5 +38,13 @@
             <version>2.2.12</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.sun/tools -->
+        <dependency>
+            <groupId>jdk.tools</groupId>
+            <artifactId>jdk.tools</artifactId>
+            <scope>system</scope>
+            <systemPath>${java.home}/../lib/tools.jar</systemPath>
+        </dependency>
+
     </dependencies>
 </project>

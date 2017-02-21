@@ -21,7 +21,7 @@ import javax.servlet.Filter;
 @SpringBootApplication
 public class Application extends WebMvcConfigurerAdapter {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IllegalAccessException, NoSuchFieldException {
         ConfigurableApplicationContext ctx = SpringApplication.run(Application.class, args);
         String[] beanNames = ctx.getBeanDefinitionNames();
         for(String beanName: beanNames) {

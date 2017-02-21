@@ -41,7 +41,6 @@ public class FileLockDemo1 {
         @Override
         public void run() {
             try {
-                new FileOutputStream("file1.txt").getChannel();
                 FileLock lock = new FileOutputStream("file1.txt").getChannel().tryLock();
                 System.out.println("lock = " + lock);
                 for(int i = 0; i < 30; i++) {
@@ -148,6 +147,19 @@ public class FileLockDemo1 {
 
             new LockAndModify(byteBuffer, 0, LENGTH / 3);
             new LockAndModify(byteBuffer, LENGTH / 2, LENGTH / 2 + LENGTH / 4);
+        }
+    }
+
+
+    @Test
+    public void readMysqlDataFile() throws IOException {
+        int LENGTH = 1024 * 100;
+        FileChannel fc = new RandomAccessFile("/usr/local/var/mysql/course_online_1/work_excel.ibd", "rw").getChannel();
+        MappedByteBuffer byteBuffer = fc.map(FileChannel.MapMode.READ_ONLY, 0, LENGTH);
+        byte[] buffer = new byte[224];
+        for(int i = 0; i < 1000; i++) {
+            byteBuffer.get(buffer, 0, 224);
+            System.out.println("i=" + i+ ",  " +  new String(buffer));
         }
     }
 

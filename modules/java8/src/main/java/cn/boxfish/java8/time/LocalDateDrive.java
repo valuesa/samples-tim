@@ -263,4 +263,21 @@ public class LocalDateDrive {
         LocalDateTime to = LocalDateTime.of(2016,6,1,1, 1, 1);
         System.out.println(start.isBefore(to));
     }
+
+    @Test
+    public void getStartWithWeek() {
+        LocalDate now = LocalDate.now();
+        int value = now.getDayOfWeek().getValue();
+        LocalDate from = now.minusDays(value - 1);
+        LocalDate to = now.plusDays(7 - value);
+        System.out.println(from);
+        System.out.println(to);
+    }
+
+
+    @Test
+    public void week() {
+        LocalDate.now();
+        System.out.println();
+    }
 }

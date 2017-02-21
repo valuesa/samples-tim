@@ -498,5 +498,68 @@ public class FunctionLambda extends Application implements Exercise {
         });
         System.out.println(index[0]);
     }
-    
+
+
+    <T> List<List<T>> split1(List<T> input, Predicate<T> predicate) {
+        List<List<T>> result = new ArrayList<>();
+        int start = 0;
+
+        for(int cur = 0; cur < input.size(); cur++) {
+            if(predicate.test(input.get(cur))) {
+                result.add(input.subList(start, cur));
+                start = cur + 1;
+            }
+        }
+        result.add(input.subList(start, input.size()));
+        return result;
+    }
+
+
+    <T> List<List<T>> split2(List<T> input, Predicate<T> predicate) {
+        int[] temp = IntStream.range(0, input.size())
+                .filter(i -> predicate.test(input.get(i)))
+                .toArray();
+        // 添加闭合标识
+        int[] edges = new int[temp.length + 2];
+        System.arraycopy(temp, 0, edges, 1, temp.length);
+        edges[0] = -1;
+        edges[edges.length - 1] = input.size();
+        return IntStream.range(0, edges.length - 1)
+                .mapToObj(k -> input.subList(edges[k] + 1, edges[k + 1]))
+                .collect(Collectors.toList());
+    }
+
+
+    <T> List<List<T>> split3(List<T> input, Predicate<T> predicate) {
+        int[] edges = IntStream.range(-1, input.size() + 1)
+                .filter(i -> i == -1 || i == input.size() || predicate.test(input.get(i)))
+                .toArray();
+        return IntStream.range(0, edges.length - 1)
+                .mapToObj(k -> input.subList(edges[k] + 1, edges[k + 1]))
+                .collect(Collectors.toList());
+    }
+
+
+    @Test
+    public void splitTest1() {
+        List<Integer> input = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        List<List<Integer>> result = split1(input, (index) -> index != 0 && index % 2 == 0);
+        System.out.println(result);
+    }
+
+
+    @Test
+    public void splitTest2() {
+        List<Integer> input = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        List<List<Integer>> result = split2(input, (index) -> index != 0 && index % 2 == 0);
+        System.out.println(result);
+    }
+
+
+    @Test
+    public void splitTest3() {
+        List<Integer> input = Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        List<List<Integer>> result = split3(input, (index) -> index != 0 && index % 2 == 0);
+        System.out.println(result);
+    }
 }
