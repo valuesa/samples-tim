@@ -22,20 +22,50 @@ public class PersonController {
 
     @RequestMapping(value = "/person/save", method = RequestMethod.POST)
     public Object save() throws InterruptedException {
+        return executeBatch(ExecuteMode.GAP_LOCK);
+    }
+
+    @RequestMapping(value = "/person/readCommit", method = RequestMethod.POST)
+    public Object readCommit() throws InterruptedException {
+        return executeBatch(ExecuteMode.ROW_LOCK);
+    }
+
+
+    @RequestMapping(value = "/person/pessimistic", method = RequestMethod.GET)
+    public Object pessimistic() throws InterruptedException {
+        return executeBatch(ExecuteMode.PESSIMISTIC_LOCK);
+    }
+
+
+    private Object executeBatch(ExecuteMode mode) throws InterruptedException {
         ExecutorService exec = Executors.newCachedThreadPool();
         for(int i = 0; i < 400; i++) {
             Runnable task;
             final int finalI = i;
+            Person person;
+            int age;
             if(i % 2 == 0) {
-                task = () -> {
-                    personService.save(new Person("luolibing", 20), 20, finalI);
-                };
+                person = new Person("luolibing", 20);
+                age = 20;
             } else {
-                final int finalI1 = i;
-                task = () -> {
-                    personService.save(new Person("luolibing", 25), 25, finalI1);
-                };
+                person = new Person("luolibing", 25);
+                age = 25;
             }
+            switch (mode) {
+                case GAP_LOCK:
+                    task = () -> personService.gapLock(person, age, finalI);
+                    break;
+                case ROW_LOCK:
+                    task = () -> personService.save2(person, age, finalI);
+                    break;
+                case PESSIMISTIC_LOCK:
+                    task = () -> personService.pessimistic(person, age, finalI);
+                    break;
+                default:
+                    task = () -> {};
+            }
+
+            // 0 为间隙锁, 1为读提交
             exec.submit(task);
         }
         exec.shutdown();
@@ -44,5 +74,15 @@ public class PersonController {
         }
         System.out.println("finish");
         return ResponseEntity.ok().build();
+    }
+
+    enum ExecuteMode {
+        GAP_LOCK(0), ROW_LOCK(1), PESSIMISTIC_LOCK(2);
+
+        public final int id;
+
+        ExecuteMode(int id) {
+            this.id = id;
+        }
     }
 }

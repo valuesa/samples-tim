@@ -4,8 +4,11 @@ import cn.boxfish.db.sample1.entity.Person;
 import cn.boxfish.db.sample1.jpa.PersonJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.util.List;
+
 
 /**
  * Created by LuoLiBing on 17/2/21.
@@ -31,7 +34,21 @@ public class PersonService {
      * @param num
      */
     @Transactional
-    public void save(Person person, Integer age, int num) {
+    public void gapLock(Person person, Integer age, int num) {
+        System.out.println(num);
+        personJpaRepository.deleteByAge(age);
+        personJpaRepository.save(person);
+    }
+
+
+    /**
+     * 读提交, 可以解决间隙锁, 但是同样解决不了死锁的问题
+     * @param person
+     * @param age
+     * @param num
+     */
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public void save2(Person person, Integer age, int num) {
         System.out.println(num);
         personJpaRepository.deleteByAge(age);
         personJpaRepository.save(person);
@@ -39,7 +56,8 @@ public class PersonService {
 
 
     @Transactional
-    public void save() {
-
+    public void pessimistic(Person person, Integer age, int num) {
+        System.out.println(num);
+        List<Person> list = personJpaRepository.findByAgePessimistic(age);
     }
 }
