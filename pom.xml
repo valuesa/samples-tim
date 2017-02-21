@@ -16,6 +16,8 @@
         <module>middleware</module>
         <module>design-patterns</module>
         <module>thinking-in-java</module>
+        <module>hotspot</module>
+        <module>algorithm</module>
 
     </modules>
 

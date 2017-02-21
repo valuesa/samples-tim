@@ -4,8 +4,9 @@ import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
-import static java.nio.file.StandardWatchEventKinds.*;
 import java.nio.file.*;
+
+import static java.nio.file.StandardWatchEventKinds.ENTRY_MODIFY;
 
 /**
  * Created by LuoLiBing on 15/8/1.
@@ -43,5 +44,7 @@ public class FileWatch {
         File file = basePath.toFile();
         System.out.println(file.length());
     }
+
+
 
 }

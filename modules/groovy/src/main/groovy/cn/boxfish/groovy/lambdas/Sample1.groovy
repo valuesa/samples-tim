@@ -1,11 +1,7 @@
 package cn.boxfish.groovy.lambdas
-
-import org.codehaus.groovy.runtime.typehandling.GroovyCastException
 import org.junit.Test
 
-import java.nio.file.Path
 import java.nio.file.Paths
-
 /**
  * Created by TIM on 2015/7/17.
  */
@@ -82,5 +78,22 @@ class Sample1 {
     void testPath() {
         def path = Paths.get("/Users/boxfish")
         println path.getFileName().toString()
+    }
+
+
+    @Test
+    void orderCompare() {
+        def lines1 = Paths.get("/share/fishcard-logs/order.txt").readLines()
+        def lines2 = Paths.get("/share/fishcard-logs/service.txt").readLines()
+        def order = new ArrayList(lines1)
+        def service = new ArrayList(lines2)
+        order.removeAll(service)
+        println order
+
+        order = new ArrayList(lines1)
+        service = new ArrayList(lines2)
+        service.removeAll(order)
+        println service.collect {it.toString().substring(0, it.toString().length()-2)}
+        println service.size()
     }
 }

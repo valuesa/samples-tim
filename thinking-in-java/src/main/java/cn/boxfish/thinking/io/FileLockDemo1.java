@@ -41,7 +41,6 @@ public class FileLockDemo1 {
         @Override
         public void run() {
             try {
-                new FileOutputStream("file1.txt").getChannel();
                 FileLock lock = new FileOutputStream("file1.txt").getChannel().tryLock();
                 System.out.println("lock = " + lock);
                 for(int i = 0; i < 30; i++) {
