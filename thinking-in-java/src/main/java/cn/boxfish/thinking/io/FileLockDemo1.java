@@ -150,4 +150,17 @@ public class FileLockDemo1 {
         }
     }
 
+
+    @Test
+    public void readMysqlDataFile() throws IOException {
+        int LENGTH = 1024 * 100;
+        FileChannel fc = new RandomAccessFile("/usr/local/var/mysql/course_online_1/work_excel.ibd", "rw").getChannel();
+        MappedByteBuffer byteBuffer = fc.map(FileChannel.MapMode.READ_ONLY, 0, LENGTH);
+        byte[] buffer = new byte[224];
+        for(int i = 0; i < 1000; i++) {
+            byteBuffer.get(buffer, 0, 224);
+            System.out.println("i=" + i+ ",  " +  new String(buffer));
+        }
+    }
+
 }
