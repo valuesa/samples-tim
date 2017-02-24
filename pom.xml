@@ -18,6 +18,8 @@
         <module>thinking-in-java</module>
         <module>hotspot</module>
         <module>algorithm</module>
+        <module>linux</module>
+        <module>cloud</module>
 
     </modules>
 

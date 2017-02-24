@@ -22,7 +22,14 @@ public interface PersonJpaRepository extends JpaRepository<Person, Long> {
     @Query(value = "delete from Person p where p.age=?1")
     void deleteByAgePessimistic(Integer age);
 
-    @Lock(LockModeType.OPTIMISTIC)
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query(value = "select p from Person p where p.age=?1")
     List<Person> findByAgePessimistic(Integer age);
+
+    @Lock(LockModeType.PESSIMISTIC_READ)
+    @Query(value = "select p from Person p where p.age=?1")
+    List<Person> findByAgePessimisticRead(Integer age);
+
+    @Lock(LockModeType.PESSIMISTIC_FORCE_INCREMENT)
+    Person findById(Long id);
 }

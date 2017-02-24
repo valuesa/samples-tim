@@ -32,7 +32,12 @@ public class ReadWriteLockDemo1 {
             ReentrantReadWriteLock.WriteLock wlock = lock.writeLock();
             wlock.lock();
             try {
+                System.out.println("writeLock()");
+                Thread.sleep(10000);
                 return lockedList.set(index, element);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return null;
             } finally {
                 wlock.unlock();
             }
@@ -54,7 +59,7 @@ public class ReadWriteLockDemo1 {
         }
 
         public static void main(String[] args) {
-            new ReaderWriterListTest(30, 1);
+            new ReaderWriterListTest(30, 5);
         }
     }
 
@@ -74,7 +79,7 @@ public class ReadWriteLockDemo1 {
                 try {
                     for (int i = 0; i < 20; i++) {
                         list.set(i, rand.nextInt());
-                        TimeUnit.MILLISECONDS.sleep(100);
+                        TimeUnit.MILLISECONDS.sleep(1);
                     }
                 } catch (InterruptedException e) {
 
@@ -92,7 +97,7 @@ public class ReadWriteLockDemo1 {
                     while (!Thread.interrupted()) {
                         for (int i = 0; i < SIZE; i++) {
                             list.get(i);
-                            TimeUnit.MILLISECONDS.sleep(1);
+                            TimeUnit.MILLISECONDS.sleep(100);
                         }
                     }
                 } catch (InterruptedException e) {

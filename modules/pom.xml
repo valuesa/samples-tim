@@ -43,6 +43,7 @@
         <module>vertx</module>
         <module>osgi</module>
         <module>db</module>
+        <module>disruptor</module>
     </modules>
 
 

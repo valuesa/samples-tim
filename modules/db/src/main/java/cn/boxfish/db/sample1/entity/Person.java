@@ -13,6 +13,8 @@ public class Person {
     private Long id;
     private String name;
     private Integer age;
+    @Version
+    private Long version;
 
     public Person() {
     }
@@ -44,5 +46,13 @@ public class Person {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public Long getVersion() {
+        return version;
+    }
+
+    public void setVersion(Long version) {
+        this.version = version;
     }
 }
