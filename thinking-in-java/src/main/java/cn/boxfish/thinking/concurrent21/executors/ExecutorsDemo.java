@@ -14,6 +14,7 @@ public class ExecutorsDemo {
         long threadId = Thread.currentThread().getId();
         System.out.println("currentTHread: " + threadId);
         // 当队列满的时候， 直接在调用者线程中调用Runnable.run()方法， 所以这个时候如果有个异常， 线程因为异常退出， 后面的任务也执行不了了
+        // 而线程中的任务抛出异常之后， 线程被终止回收， 线程池会重新创建线程补上。
         ThreadPoolExecutor executor =
                 new ThreadPoolExecutor(2, 2, 1000, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(2), new ThreadPoolExecutor.CallerRunsPolicy());
         for(int i = 0; i < 100; i++) {

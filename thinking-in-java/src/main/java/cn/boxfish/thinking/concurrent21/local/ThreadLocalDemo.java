@@ -15,6 +15,10 @@ import java.util.concurrent.TimeUnit;
  * 2 java8中ThreadLocal添加了静态生成方法ThreadLocal.withInitial()
  * 3 每个线程都有一个ThreadLocalMap对象用来保存自己的变量,当使用get的时候会根据当前线程Thread.currentThread()获取这个线程的ThreadLocalMap对象,然后根据ThreadLocal作为key获取对应的value
  * 4 一般情况下ThreadLocal作为静态变量存在于类中.
+ *
+ * ThreadLocal实现原理：
+ * 每个Thread都关联了一个ThreadLocalMap对象， 其中的key为ThreadLocal对象， value为对应的值。
+ * 当要获取Thread的时候get()，会用当前线程直接获取对应的ThreadLocalMap， 然后使用ThreadLocal对象this作为key取得对应的值， 如果没有值的话， 取默认值并且放入到对应的Entry中。
  */
 public class ThreadLocalDemo {
 
