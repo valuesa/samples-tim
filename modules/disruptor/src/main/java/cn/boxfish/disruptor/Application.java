@@ -7,8 +7,10 @@ package cn.boxfish.disruptor;
  * github: https://github.com/LMAX-Exchange/disruptor
  *
  *
- *
- * TODO 突然觉得要看的东西好多,
  */
 public class Application {
+
+    public static void main(String[] args) {
+        System.out.println(System.currentTimeMillis());
+    }
 }
