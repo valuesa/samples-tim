@@ -9,6 +9,13 @@ import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
 
 /**
  * Created by LuoLiBing on 15/11/25.
+ * redis特点
+ * 1 几乎所有数据都在内存
+ * 2 所有数据都可以持久化
+ * 3 支持自增操作
+ * 4 支持事务
+ * 5 支持订阅与发布
+ * 6 单线程使用异步IO
  */
 @ImportResource("classpath:/spring.xml")
 @ComponentScan(value = {"cn.boxfish"})
