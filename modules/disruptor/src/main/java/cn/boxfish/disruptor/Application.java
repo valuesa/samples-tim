@@ -6,6 +6,7 @@ package cn.boxfish.disruptor;
  * LMAX架构: http://ifeve.com/lmax/
  * github: https://github.com/LMAX-Exchange/disruptor
  *
+ * https://www.slideshare.net/trishagee/introduction-to-the-disruptor?from=new_upload_email
  *
  */
 public class Application {
