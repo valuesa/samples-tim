@@ -6,9 +6,12 @@ package cn.boxfish.disruptor;
  * LMAX架构: http://ifeve.com/lmax/
  * github: https://github.com/LMAX-Exchange/disruptor
  *
+ * https://www.slideshare.net/trishagee/introduction-to-the-disruptor?from=new_upload_email
  *
- *
- * TODO 突然觉得要看的东西好多,
  */
 public class Application {
+
+    public static void main(String[] args) {
+        System.out.println(System.currentTimeMillis());
+    }
 }
