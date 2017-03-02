@@ -17,8 +17,9 @@
         <module>design-patterns</module>
         <module>thinking-in-java</module>
         <module>hotspot</module>
+        <module>linux</module>
+        <module>cloud</module>
         <module>algorithm</module>
-
     </modules>
 
     <dependencies>

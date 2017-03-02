@@ -25,6 +25,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 4 为什么表分区查询删除快, 这是因为表分区在一个数据库文件中, io竞争少
  *
  * hexdump -v -C table1.frm 可以查看对应的数据库文件hex二进制
+ *
+ *
  */
 @SpringBootApplication
 public class Application {

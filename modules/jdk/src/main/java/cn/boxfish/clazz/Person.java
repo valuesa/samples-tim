@@ -16,4 +16,14 @@ public class Person implements PersonInterface {
     {
         System.out.println("instant init person");
     }
+
+
+    public static void main(String[] args) throws ClassNotFoundException {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        Class<?> clazz1 = classLoader.loadClass("cn.boxfish.clazz.Grade");
+        Class<?> clazz2 = classLoader.loadClass("cn.boxfish.clazz.Grade");
+        System.out.println(clazz1.equals(clazz2));
+
+        Class.forName("");
+    }
 }

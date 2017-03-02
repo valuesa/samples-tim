@@ -4,6 +4,7 @@ import cn.boxfish.db.sample1.entity.Person;
 import cn.boxfish.db.sample1.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +34,29 @@ public class PersonController {
 
     @RequestMapping(value = "/person/pessimistic", method = RequestMethod.GET)
     public Object pessimistic() throws InterruptedException {
-        return executeBatch(ExecuteMode.PESSIMISTIC_LOCK);
+        personService.pessimistic(20, 0);
+        return ResponseEntity.ok().build();
+    }
+
+
+    @RequestMapping(value = "/person/pessimisticRead", method = RequestMethod.GET)
+    public Object pessimisticRead() throws InterruptedException {
+        personService.pessimisticRead(20);
+        return ResponseEntity.ok().build();
+    }
+
+
+    @RequestMapping(value = "/person/pessimisticIncrement/{id}", method = RequestMethod.GET)
+    public Object pessimisticIncrement(@PathVariable Long id) throws InterruptedException {
+        personService.pessimisticIncrement(id);
+        return ResponseEntity.ok().build();
+    }
+
+
+    @RequestMapping(value = "/slowQuery", method = RequestMethod.GET)
+    public Object slowQuery() {
+        personService.slowQueryReport();
+        return ResponseEntity.ok().build();
     }
 
 
@@ -59,7 +82,13 @@ public class PersonController {
                     task = () -> personService.save2(person, age, finalI);
                     break;
                 case PESSIMISTIC_LOCK:
-                    task = () -> personService.pessimistic(person, age, finalI);
+                    task = () -> {
+                        try {
+                            personService.pessimistic(age, finalI);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    };
                     break;
                 default:
                     task = () -> {};
@@ -77,7 +106,7 @@ public class PersonController {
     }
 
     enum ExecuteMode {
-        GAP_LOCK(0), ROW_LOCK(1), PESSIMISTIC_LOCK(2);
+        GAP_LOCK(0), ROW_LOCK(1), PESSIMISTIC_LOCK(2), PESSIMISTIC_INCREMENT(3);
 
         public final int id;
 

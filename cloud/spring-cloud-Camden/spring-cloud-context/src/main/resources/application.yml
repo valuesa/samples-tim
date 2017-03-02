@@ -1,0 +1,15 @@
+server:
+  port: 8080
+
+#context:
+#  test: '{cipher}true'
+
+spring:
+  cloud:
+    inetutils:
+      preferred-networks:
+        - 192.162
+
+#keytool -genkeypair -alias mykey -keyalg RSA \
+#  -dname "CN=Web Server,OU=Unit,O=Organization,L=City,S=State,C=US" \
+#  -keypass changeme -keystore server.jks -storepass letmein

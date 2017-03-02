@@ -334,4 +334,52 @@ public class ExecutorDemo {
         // isDone()判断是否完成
     }
 
+    private Random rand = new Random(47);
+
+    // 将结果都放入到CompletionService队列中，然后可以通过take方式获取队列里面的结果， 与用list收集future相比， 这个可以快速的将已经完成的任务返回，这样就能快速的进行接下来的处理了
+    @Test
+    public void completionService() {
+        ExecutorService exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        CompletionService<Integer> executor = new ExecutorCompletionService<>(exec);
+        for(int i = 0; i < 1000; i++) {
+            executor.submit(() -> {
+                TimeUnit.MILLISECONDS.sleep(rand.nextInt(2000));
+                return rand.nextInt(100);
+            });
+        }
+        exec.shutdown();
+
+        try {
+            for (int i = 0; i < 1000; i++) {
+                Future<Integer> future = executor.take();
+                Integer result = future.get();
+                System.out.println("result = " + result);
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } catch(ExecutionException e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 一批任务一起执行， 然后统一返回
+     * @throws InterruptedException
+     * @throws ExecutionException
+     */
+    @Test
+    public void invokeAll() throws InterruptedException, ExecutionException {
+        ExecutorService exec = Executors.newCachedThreadPool();
+        List<Callable<Integer>> tasks = new ArrayList<>(100);
+        for(int i = 0; i <100; i++) {
+            tasks.add(() -> {
+                TimeUnit.MILLISECONDS.sleep(rand.nextInt(2000));
+                return rand.nextInt(100);
+            });
+        }
+        List<Future<Integer>> futures = exec.invokeAll(tasks, 10, TimeUnit.SECONDS);
+        for(Future<Integer> future : futures) {
+            System.out.println("future = " + future.get());
+        }
+    }
 }

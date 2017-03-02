@@ -5,10 +5,16 @@ spring:
     password: root
     driver-class-name: com.mysql.jdbc.Driver
     hibernate.dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+    tomcat:
+      jdbc-interceptors: cn.boxfish.db.sample1.interceptor.MySlowQueryReport(threshold=3000,maxQueries=100)
 
   jpa:
     database: MYSQL
     show-sql: true
 
+
 server:
   port: 8070
+
+logging:
+  level: DEBUG

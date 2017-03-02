@@ -1,5 +1,7 @@
 package cn.boxfish.thinking.io;
 
+import org.joda.time.LocalDateTime;
+import org.joda.time.format.DateTimeFormat;
 import org.junit.Test;
 
 import java.io.File;
@@ -8,10 +10,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.regex.Pattern;
 
 /**
@@ -278,5 +281,23 @@ public class FileDemo1 {
             // 内部类
             new ProcessFiles(System.out::println, "java").start(new String[]{"FileDemo1"});
         }
+    }
+
+    @Test
+    public void duration() throws ParseException {
+
+        Date parse = new SimpleDateFormat("HH:mm:ss.SS").parse("00:00:06.24");
+        System.out.println(parse.toInstant().toEpochMilli());
+
+        LocalTime lt = LocalTime.parse("00:02:25", DateTimeFormatter.ofPattern("HH:mm:ss"));
+        System.out.println(lt.getSecond());
+    }
+
+
+    @Test
+    public void append() {
+        LocalDateTime localDateTime = LocalDateTime.parse("00:00:01.02", DateTimeFormat.forPattern("HH:mm:ss.SS"));
+        System.out.println(localDateTime.getMillisOfDay());
+
     }
 }

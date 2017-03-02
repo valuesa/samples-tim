@@ -1,5 +1,7 @@
 package cn.boxfish.thinking.concurrent21.lock;
 
+import org.junit.Test;
+import sun.misc.Unsafe;
 import sun.misc.VM;
 import sun.reflect.Reflection;
 
@@ -138,4 +140,36 @@ public class Unsafe1 {
      * @param time
      */
     public native void park(boolean isAbsolute, long time);
+
+
+    private static Unsafe unsafe;
+
+    static {
+        try {
+            //通过反射获取rt.jar下的Unsafe类
+            Field field = Unsafe.class.getDeclaredField("theUnsafe");
+            field.setAccessible(true);
+            unsafe = (Unsafe) field.get(null);
+        } catch (Exception e) {
+            System.out.println("Get Unsafe instance occur error"+ e);
+        }
+    }
+
+    @Test
+    public void compareAndSwapInt() throws NoSuchFieldException {
+        Target target = new Target();
+        Field arg1 = Target.class.getDeclaredField("arg1");
+        long offset = unsafe.objectFieldOffset(arg1);
+        System.out.println("arg1 offset=" + offset);
+        boolean b = unsafe.compareAndSwapInt(target, offset, 0, 10);
+        System.out.println(b);
+        System.out.println(target.arg1);
+    }
+
+    class Target {
+        int arg1 = 0;
+        int arg2;
+        String str1;
+        String str2;
+    }
 }

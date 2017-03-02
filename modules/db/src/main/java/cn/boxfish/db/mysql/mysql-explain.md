@@ -43,7 +43,25 @@ possible_keys: PRIMARY
         Extra: Using index
 2 rows in set (0.00 sec)
 
-###
+
+> explain输出字段
+
+* id                查询的唯一标识                 这个查询的序列号
+* select_type       查询方式
+   可以是以下方式 SIMPLE(简单查询， 不适用连接或者子查询)、PRIMARY(最外部的查询)、UNION(第二个或者后面一个连接)、DEPENDENT UNION(第二个或者后面一个连接依赖于外部查询)、
+   UNION_RESULT(连接的结果)
+* partitions        命中的分区
+* type              连接方式
+* possible_keys     可能被选择的index索引
+* key               实际选择的索引
+* key_len           key的长度
+* ref               引用的长度
+* rows              估计要检索的行总数
+* filtered          过滤行的百分比
+* Extra             额外的信息
+
+> 相关SUBQUERY与UNCACHEABLE_SUBQUERY查询评估不一样，对于DEPENDENT_SUBQUERY，对于来自外部上下文的变量的每个集合， SUBQUERY仅重新求值一次。而UNCACHEABLE SUBQUERY对于每一行都要重新计算子查询。
+子查询缓存不同于查询缓存， 子查询缓存是发生在执行期间， 而查询缓存在查询执行完成后才用于存储结果。
 
 ## 二、SHOW WARNINGS
 > SHOW WARNINGS包含了很多特殊标记记录重写sql和优化动作的一些信息，该sql语句不一定是有效的sql， 并且不打算真正执行这个sql, 同时还包含一些注释行
@@ -53,3 +71,5 @@ possible_keys: PRIMARY
 *
 
 ### TODO 明天继续
+
+https://dev.mysql.com/doc/refman/5.7/en/explain-output.html
