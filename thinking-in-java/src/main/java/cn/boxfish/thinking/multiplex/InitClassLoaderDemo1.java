@@ -94,11 +94,18 @@ public class InitClassLoaderDemo1 {
          */
     }
 
-    public static void main(String[] args) {
+    public static void main1(String[] args) {
         System.out.println(Beetle.x);
         System.out.println(Beetle.name);
         System.out.println(Beetle.xx);
         System.out.println("Beetle constructor");
         new Beetle();
+    }
+
+
+    public static void main(String[] args) {
+        int a = 1;
+        int b = 2;
+        b = a + 0 * (a = b);
     }
 }

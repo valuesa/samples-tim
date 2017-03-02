@@ -12,4 +12,7 @@ public class ArrayListUtils<T> {
     static <T> T get(int index) {
         return null;
     }
+
+
+
 }

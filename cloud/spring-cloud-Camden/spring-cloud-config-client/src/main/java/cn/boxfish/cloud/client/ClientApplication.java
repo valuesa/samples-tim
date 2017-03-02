@@ -1,7 +1,6 @@
 package cn.boxfish.cloud.client;
 
-import cn.boxfish.cloud.client.person.PersonConfig;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,8 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ClientApplication implements CommandLineRunner {
 
-    @Autowired
-    private PersonConfig personConfig;
+    @Value("${foo.db}")
+    private String foo;
 
     public static void main(String[] args) {
         SpringApplication.run(ClientApplication.class, args);
@@ -21,6 +20,6 @@ public class ClientApplication implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        System.out.println(personConfig);
+        System.out.println(foo);
     }
 }
