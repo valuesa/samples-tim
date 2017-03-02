@@ -1,7 +1,7 @@
 package cn.boxfish.cloud.config.server;
 
+import cn.boxfish.cloud.config.server.entity.PersonConfig;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,8 +26,8 @@ public class ConfigServerApplication implements CommandLineRunner {
     @Autowired
     private EnvironmentRepository repository;
 
-    @Value("${foo}")
-    private Long val;
+    @Autowired
+    private PersonConfig personConfig;
 
     public static void main(String[] args) {
         SpringApplication.run(ConfigServerApplication.class, args);
@@ -36,6 +36,6 @@ public class ConfigServerApplication implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
         System.out.println(repository);
-        System.out.println(val);
+        System.out.println(personConfig);
     }
 }
