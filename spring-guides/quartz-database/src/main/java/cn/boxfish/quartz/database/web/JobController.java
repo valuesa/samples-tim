@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.Date;
 
 /**
@@ -28,13 +29,19 @@ public class JobController {
         return ResponseEntity.ok().build();
     }
 
+    @RequestMapping(value = "/list")
+    public Object listAllJob() throws SchedulerException {
+        return Collections.singletonMap("result", jobService.getAllJob());
+    }
+
     private JobDataForm mock() {
         JobDataForm dataForm = new JobDataForm();
         dataForm.setType(JobType.LOCAL.value());
         dataForm.setClazzName("cn.boxfish.quartz.database.task.SimpleLocalTask");
         dataForm.setMethod("execute");
-        dataForm.setStartTime(new Date(new Date().getTime() + 1000 * 10 * 60));
-        dataForm.setPolicy(JobPolicy.TIMER.value());
+        dataForm.setStartTime(new Date(new Date().getTime() + 1000 * 10));
+        dataForm.setPolicy(JobPolicy.CRON.value());
+        dataForm.setCronExpression("*/5 * * * * ?");
         dataForm.setArgs("1,2,3,4");
         return dataForm;
     }
