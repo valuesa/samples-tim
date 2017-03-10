@@ -16,7 +16,7 @@ public class ClassNotFoundExceptionSample {
     @Test
     public void testSayHello() {
         System.out.println("start");
-        Helper.sayHello();
+//        Helper.sayHello();
         System.out.println("end");
     }
 

@@ -13,7 +13,7 @@ sql_no_cache
 ## 三、最终优化
 > 巨大的偏移量查询会拖慢整个系统， 因此我们要重写这个Sql, 使用索引来进行查询。
 向后翻页的sql
-select * from dept_emp where emp_no>$last_id order by emp_no desc limit $prepage; last_id是上一次分页查询中最大的id, 然后limit $prepage使用的是每页的数据大小。
+select * from dept_emp where emp_no>$last_id order by emp_no desc limit $perpage; last_id是上一次分页查询中最大的id, 然后limit $prepage使用的是每页的数据大小。
 向前翻页的sql
 select * from dept_emp where emp_no<$last_id order by emp_no desc limit $prepage; last_id也是上一页的第一个id。
 这种方式只能处理简单的向前翻页，向后翻页，而无法做出真正的导航页码。而要做真正的页码， 得添加页码对应的页码以及对应的id。
