@@ -1,8 +1,11 @@
 package cn.boxfish.resttemplate
+
+import cn.boxfish.resttemplate.util.TextUtils
 import groovy.util.logging.Slf4j
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.http.ResponseEntity
 import org.springframework.http.client.ClientHttpResponse
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
@@ -103,6 +106,14 @@ class Application implements CommandLineRunner {
             set.add(id)
         }
         //new RestTemplate().getForObject("http://192.168.66.176:8088/teacher/page/1?page=0&size=20", JsonResultModel.class)
+    }
+
+
+    @RequestMapping(value = "/emoji")
+    public Object emoji(String emoji) {
+        def emoji1 = TextUtils.stripEmoji(emoji);
+        println emoji1
+        ResponseEntity.ok().build()
     }
 
 }
