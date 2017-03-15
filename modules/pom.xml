@@ -44,6 +44,7 @@
         <module>osgi</module>
         <module>db</module>
         <module>disruptor</module>
+        <module>jersey</module>
     </modules>
 
 
