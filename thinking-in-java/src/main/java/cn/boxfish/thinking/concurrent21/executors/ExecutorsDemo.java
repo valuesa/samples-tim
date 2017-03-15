@@ -2,6 +2,7 @@ package cn.boxfish.thinking.concurrent21.executors;
 
 import org.junit.Test;
 
+import java.util.Random;
 import java.util.concurrent.*;
 
 /**
@@ -35,5 +36,86 @@ public class ExecutorsDemo {
         while (!executor.isTerminated()) {
             Thread.sleep(100);
         }
+    }
+
+    /**
+     * 无界队列线程池
+     * @throws InterruptedException
+     */
+    @Test
+    public void linkedQueue() throws InterruptedException {
+        Random rand = new Random();
+        ThreadPoolExecutor exec = new ThreadPoolExecutor(2, 5, 0, TimeUnit.MICROSECONDS, new LinkedBlockingQueue<>());
+        for(int i = 0 ; i < 1000000; i++) {
+            exec.submit(() -> {
+                try {
+                    System.out.println(exec.getPoolSize());
+                    Thread.sleep(rand.nextInt(100));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+        exec.shutdown();
+        while (!exec.isTerminated()) {
+            Thread.sleep(100);
+        }
+    }
+
+    /**
+     * 有界队列线程池在队列满的时候会扩充到最大线程数， 然后如果继续添加的话， 会启动拒绝策略, 默认为拒绝抛出异常
+     * @throws InterruptedException
+     */
+    @Test
+    public void arrayQueue() throws InterruptedException {
+        Random rand = new Random();
+        ThreadPoolExecutor exec = new ThreadPoolExecutor(2, 5, 0, TimeUnit.MICROSECONDS, new ArrayBlockingQueue<>(100), new ThreadPoolExecutor.CallerRunsPolicy());
+        for(int i = 0 ; i < 1000000; i++) {
+            exec.submit(() -> {
+                try {
+                    System.out.println(exec.getPoolSize());
+                    Thread.sleep(rand.nextInt(100));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
+        exec.shutdown();
+        while (!exec.isTerminated()) {
+            Thread.sleep(100);
+        }
+    }
+
+    /**
+     * allowCoreThreadTimeOut属性， 允许当数量为core时， 超过超时时间再继续降低
+     * @throws InterruptedException
+     */
+    @Test
+    public void allowCoreThreadTimeOut() throws InterruptedException {
+        Random rand = new Random();
+        ThreadPoolExecutor exec = new ThreadPoolExecutor(3, 5, 200, TimeUnit.MICROSECONDS, new ArrayBlockingQueue<>(100), new ThreadPoolExecutor.CallerRunsPolicy());
+        exec.allowCoreThreadTimeOut(true);
+        for(int i = 0 ; i < 2000; i++) {
+            exec.submit(() -> {
+                try {
+                    Thread.sleep(rand.nextInt(100));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(exec.getPoolSize());
+            });
+        }
+//        exec.shutdown();
+        while (!exec.isTerminated()) {
+            System.out.println(exec.getPoolSize());
+            Thread.sleep(100);
+        }
+    }
+
+
+    @Test
+    public void emptyPool() {
+        ThreadPoolExecutor exec = new ThreadPoolExecutor(3, 5, 200, TimeUnit.MICROSECONDS, new ArrayBlockingQueue<>(100), new ThreadPoolExecutor.CallerRunsPolicy());
+        System.out.println(exec.getPoolSize());
     }
 }
